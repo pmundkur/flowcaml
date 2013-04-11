@@ -1,0 +1,40 @@
+(**************************************************************************)
+(*                                                                        *)
+(*                               Flow Caml                                *)
+(*                                                                        *)
+(*          Vincent Simonet, Projet Cristal, INRIA Rocquencourt           *)
+(*                                                                        *)
+(*  Copyright 2002, 2003 Institut National de Recherche en Informatique   *)
+(*  et en Automatique.  All rights reserved.  This file is distributed    *)
+(*  under the terms of the GNU Library General Public License, with the   *)
+(*  special exception on linking described in file ../LICENSE.            *)
+(*                                                                        *)
+(*  Author contact: Vincent.Simonet@inria.fr                              *)
+(*  Software page: http://cristal.inria.fr/~simonet/soft/flowcaml/        *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* Character operations *)
+
+external code: 'a char -> 'a int = "%identity"
+external unsafe_chr: 'a int -> 'a char = "%identity"
+
+let chr n =
+  if n < 0 or n > 255 then invalid_arg "Char.chr" else unsafe_chr n
+
+
+external escaped : 'a char -> 'a string = ""
+
+let lowercase c =
+  if (c >= 'A' && c <= 'Z')
+  || (c >= '\192' && c <= '\214')
+  || (c >= '\216' && c <= '\222')
+  then unsafe_chr(code c + 32)
+  else c
+
+let uppercase c =
+  if (c >= 'a' && c <= 'z')
+  || (c >= '\224' && c <= '\246')
+  || (c >= '\248' && c <= '\254')
+  then unsafe_chr(code c - 32)
+  else c

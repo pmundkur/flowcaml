@@ -1,0 +1,35 @@
+./dalton_aux.cmo: ./dalton_aux.cmi 
+./dalton_aux.cmx: ./dalton_aux.cmi 
+./dalton_dumb.cmo: dalton_aux.cmi dalton_sig.cmo 
+./dalton_dumb.cmx: dalton_aux.cmx dalton_sig.cmx 
+./dalton_lib.cmo: ./dalton_lib.cmi 
+./dalton_lib.cmx: ./dalton_lib.cmi 
+./dalton_list.cmo: dalton_lib.cmi 
+./dalton_list.cmx: dalton_lib.cmx 
+./dalton.cmo: ../src-averell/avl_tarjan.cmi ../src-averell/avl_topo.cmi \
+    dalton_aux.cmi dalton_debug.cmo dalton_lib.cmi dalton_list.cmo \
+    dalton_sig.cmo ./dalton.cmi 
+./dalton.cmx: ../src-averell/avl_tarjan.cmx ../src-averell/avl_topo.cmx \
+    dalton_aux.cmx dalton_debug.cmx dalton_lib.cmx dalton_list.cmx \
+    dalton_sig.cmx ./dalton.cmi 
+./dalton_sig.cmo: dalton_aux.cmi 
+./dalton_sig.cmx: dalton_aux.cmx 
+./dalton_templates.cmo: dalton_sig.cmo 
+./dalton_templates.cmx: dalton_sig.cmx 
+./dalton.cmi: dalton_aux.cmi dalton_sig.cmo 
+../src-averell/avl_closure.cmo: ../src-averell/avl_closure.cmi 
+../src-averell/avl_closure.cmx: ../src-averell/avl_closure.cmi 
+../src-averell/avl_draw.cmo: ../src-averell/avl_graphviz.cmi \
+    ../src-averell/avl_draw.cmi 
+../src-averell/avl_draw.cmx: ../src-averell/avl_graphviz.cmx \
+    ../src-averell/avl_draw.cmi 
+../src-averell/avl_graphviz.cmo: ../src-averell/avl_graphviz.cmi 
+../src-averell/avl_graphviz.cmx: ../src-averell/avl_graphviz.cmi 
+../src-averell/avl_kernel.cmo: ../src-averell/avl_tarjan.cmi \
+    ../src-averell/avl_topo.cmi ../src-averell/avl_kernel.cmi 
+../src-averell/avl_kernel.cmx: ../src-averell/avl_tarjan.cmx \
+    ../src-averell/avl_topo.cmx ../src-averell/avl_kernel.cmi 
+../src-averell/avl_tarjan.cmo: ../src-averell/avl_tarjan.cmi 
+../src-averell/avl_tarjan.cmx: ../src-averell/avl_tarjan.cmi 
+../src-averell/avl_topo.cmo: ../src-averell/avl_topo.cmi 
+../src-averell/avl_topo.cmx: ../src-averell/avl_topo.cmi 

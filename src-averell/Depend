@@ -1,0 +1,14 @@
+./avl_closure.cmo: ./avl_closure.cmi 
+./avl_closure.cmx: ./avl_closure.cmi 
+./avl_draw.cmo: avl_graphviz.cmi ./avl_draw.cmi 
+./avl_draw.cmx: avl_graphviz.cmx ./avl_draw.cmi 
+./avl_graphviz.cmo: ./avl_graphviz.cmi 
+./avl_graphviz.cmx: ./avl_graphviz.cmi 
+./avl_kernel.cmo: avl_tarjan.cmi avl_topo.cmi ./avl_kernel.cmi 
+./avl_kernel.cmx: avl_tarjan.cmx avl_topo.cmx ./avl_kernel.cmi 
+./avl_tarjan.cmo: ./avl_tarjan.cmi 
+./avl_tarjan.cmx: ./avl_tarjan.cmi 
+./avl_topo.cmo: ./avl_topo.cmi 
+./avl_topo.cmx: ./avl_topo.cmi 
+./demo.cmo: avl_closure.cmi avl_draw.cmi avl_kernel.cmi avl_tarjan.cmi 
+./demo.cmx: avl_closure.cmx avl_draw.cmx avl_kernel.cmx avl_tarjan.cmx 

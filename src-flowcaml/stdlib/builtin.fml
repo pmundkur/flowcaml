@@ -1,0 +1,65 @@
+
+(** {2 Predefined types} 
+These are predefined types :
+*)
+
+
+type #'a:level int
+(** The type of integer numbers. *)
+
+type #'a:level char
+(** The type of characters. *)
+
+type #'a:level stg
+(** The type of immutable strings. *)
+
+type (='a:level, #'b:level) string
+(** The type of character strings. *)
+
+type #'a:level float
+(** The type of floating-point numbers. *)
+
+type #'a:level bool
+(** The type of booleans (truth values). *)
+
+type unit = ()
+(** The type of the unit value. *)
+
+type (+'a:type, #'b:level) array
+(**  The type of arrays whose elements have type ['a].*)
+
+type ('a, 'b) list = [] | :: of 'a * ('a, 'b) list # 'b
+(**  The type of lists whose elements have type ['a]. *)
+
+type ('a, 'b) option = None | Some of 'a # 'b
+(** The type of optional values. *)
+
+
+
+(** {2 Exceptions} *)
+
+(** These are predefined exceptions : *)
+
+exception Invalid_argument : 'a of 'a stg
+(** Exception raised by library functions to signal that the given
+    arguments do not make sense. *)
+
+exception Failure : 'a of 'a stg
+(** Exception raised by library functions to signal that they are
+    undefined on the given arguments.  *)
+
+exception Not_found
+(** Exception raised by search functions when the desired object
+    could not be found. *)
+
+exception Sys_error : 'a of 'a stg
+(** Exception raised by the input/output functions to report
+    an operating system error. *)
+
+exception End_of_file
+(** Exception raised by input functions to signal that the
+    end of file has been reached. *)
+
+exception Division_by_zero
+(** Exception raised by division and remainder operations
+    when their second argument is null. *)

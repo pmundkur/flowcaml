@@ -1,0 +1,83 @@
+##########################################################################
+#                                                                        #
+#                               Flow Caml                                #
+#                                                                        #
+#          Vincent Simonet, Projet Cristal, INRIA Rocquencourt           #
+#                                                                        #
+#  Copyright 2002 Institut National de Recherche en Informatique et en   #
+#  Automatique.  All rights reserved.  This file is distributed under    #
+#  the terms of the Q Public License version 1.0.                        #
+#                                                                        #
+#  Author contact: Vincent.Simonet@inria.fr                              #
+#  Software page: http://cristal.inria.fr/~simonet/soft/flowcaml/        #
+#                                                                        #
+##########################################################################
+
+
+
+#########################################################################
+# Objective Caml compiler
+
+OCAMLC=@OCAMLC@
+OCAMLOPT=@OCAMLOPT@
+OCAMLYACC=@OCAMLYACC@
+OCAMLLEX=@OCAMLLEX@
+OCAMLDEP=@OCAMLDEP@
+
+CPP=@CPP@
+
+OCAML_GRAPHICS=@OCAML_GRAPHICS@
+EXE=@EXEEXT@
+
+OCAML-GENERATED= *.cma *.cmi *.cmo *.cmx *.cmxa *.o *.a *.output *~
+OCAMLC_FLAGS= $(SRCDIRS:%=-I %)@OCAML_ASSERT_FLAG@ -w -A
+OCAMLC_LINK_FLAGS= @OCAML_CUSTOM_FLAG@
+OCAMLOPT_FLAGS= $(SRCDIRS:%=-I %)@OCAML_ASSERT_FLAG@
+OCAMLDEP_FLAGS= $(SRCDIRS:%=-I %)
+
+
+
+#########################################################################
+# Generic compilation rules
+
+.SUFFIXES: .ml .mli .mll .mly .cma .cmi .cmo .cmx .cmxa
+
+.mli.cmi:
+		$(OCAMLC) $(OCAMLC_FLAGS) -c $<
+.ml.cmo:
+		$(OCAMLC) $(OCAMLC_FLAGS) -c $<
+.ml.cmx:	
+		$(OCAMLOPT) $(OCAMLOPT_FLAGS) -c $<
+
+.mll.ml:
+		$(OCAMLLEX) $<
+.mly.mli:	
+		$(OCAMLYACC) -v $<
+.mly.ml:	
+		$(OCAMLYACC) -v $<
+
+
+
+##########################################################################
+# Proxy rules
+
+.PHONY: depend clean default
+
+default: all
+
+depend:
+	$(OCAMLDEP) $(OCAMLDEP_FLAGS) \
+	$(foreach d,$(SRCDIRS), $d/*.ml $d/*.mli) > Depend
+
+clean::
+	$(foreach d,$(SRCDIRS),rm -f $(OCAML-GENERATED:%=$d/%))
+	rm -f $(BYTEBIN) $(OPTBIN)
+
+
+##########################################################################
+# Functions
+
+copyifexists= if test -f $(1); then cp -f $(1) $(2); fi
+copy.opt= if test -f $(1).opt$(EXE); then cp -f $(1).opt$(EXE) $(2)/$(1)$(EXE); \
+          cp -f $(1)$(EXE) $(2)/$(1)$(EXE); fi
+createdir=if test -d $(1); then : ; else mkdir -p $(1); fi

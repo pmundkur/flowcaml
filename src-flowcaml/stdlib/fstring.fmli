@@ -1,0 +1,132 @@
+(**************************************************************************)
+(*                                                                        *)
+(*                               Flow Caml                                *)
+(*                                                                        *)
+(*          Vincent Simonet, Projet Cristal, INRIA Rocquencourt           *)
+(*                                                                        *)
+(*  Copyright 2002 Institut National de Recherche en Informatique et en   *)
+(*  Automatique.  All rights reserved.  This file is distributed under    *)
+(*  the terms of the GNU Library General Public License, with the         *)
+(*  special exception on linking described in file ../LICENSE.            *)
+(*                                                                        *)
+(*  Author contact: Vincent.Simonet@inria.fr                              *)
+(*  Software page: http://cristal.inria.fr/~simonet/soft/flowcaml/        *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* $Id: fstring.fmli,v 1.1 2002/10/30 15:10:39 simonet Exp $ *)
+
+type (+'a:level, #'a:level) t
+
+(** String operations. *)
+
+external length : (_, 'a) t -> 'a int = "%string_length"
+(** Return the length (number of characters) of the given string. *)
+
+external get : ('a, 'b) t -> 'b int -{'d | Invalid_argument: 'c |}-> 'a char
+               with 'b < 'a, 'c
+             = "%string_safe_get"
+(** [Fstring.get s n] returns character number [n] in string [s].
+   The first character is character number 0.
+   The last character is character number [String.length s - 1].
+   Raise [Invalid_argument] if [n] is outside the range
+   0 to [(Fstring.length s - 1)].
+   You can also write [s.[n]] instead of [Fstring.get s n]. *)
+
+val sub : ('a, 'b) t ->
+          'b int -> 'b int -{'c | Invalid_argument: 'd |}-> ('a, 'b) t
+          with 'c, 'b < 'd, 'a
+(** [Fstring.sub s start len] returns a fresh string of length [len],
+   containing the characters number [start] to [start + len - 1]
+   of string [s].
+   Raise [Invalid_argument] if [start] and [len] do not
+   designate a valid substring of [s]; that is, if [start < 0],
+   or [len < 0], or [start + len > ]{!Fstring.length}[ s]. *)
+
+val concat : ('a, 'b) t -> ('a, 'b) t -> ('a, 'b) t
+(** [Fstring.concat sep sl] concatenates the list of strings [sl],
+   inserting the separator string [sep] between each. *)
+
+val iter :  ('a char -{'b | 'c | 'b}-> 'd) -> ('a, 'b) t 
+            -{'b | 'c |}-> _ unit
+            with union('c) < 'b
+(** [Fstring.iter f s] applies function [f] in turn to all
+   the characters of [s].  It is equivalent to
+   [f s.(0); f s.(1); ...; f s.(Fstring.length s - 1); ()]. *)
+
+val escaped : ('a, 'b) t -> ('a, 'b) t
+              with 'a < 'b
+(** Return a copy of the argument, with special characters
+   represented by escape sequences, following the lexical
+   conventions of Objective Caml.  If there is no special
+   character in the argument, return the original string itself,
+   not a copy. *)
+
+val index : ('a, 'a) t -> 'a char -{'b | Not_found: 'b |}-> 'a int
+            with 'a < 'b
+(** [Fstring.index s c] returns the position of the leftmost
+   occurrence of character [c] in string [s].
+   Raise [Not_found] if [c] does not occur in [s]. *)
+
+val rindex : ('a, 'a) t -> 'a char -{'b | Not_found: 'b |}-> 'a int
+             with 'a < 'b
+(** [Fstring.rindex s c] returns the position of the rightmost
+   occurrence of character [c] in string [s].
+   Raise [Not_found] if [c] does not occur in [s]. *)
+
+val index_from : ('a, 'b) t -> 'b int -> 'a char
+                 -{'c | Invalid_argument: 'd; Not_found: 'e |}-> 'f int
+                 with 'a < 'e, 'f
+                 and  'b < 'd, 'e, 'f
+                 and  'c < 'd, 'e
+(** Same as {!Fstring.index}, but start
+   searching at the character position given as second argument.
+   [Fstring.index s c] is equivalent to [Fstring.index_from s 0 c].*)
+
+val rindex_from : ('a, 'b) t -> 'b int -> 'a char
+                  -{'c | Invalid_argument: 'd; Not_found: 'e |}-> 'f int
+                  with 'a < 'e, 'f
+                  and  'b < 'd, 'e, 'f
+                  and  'c < 'd, 'e
+(** Same as {!Fstring.rindex}, but start
+   searching at the character position given as second argument.
+   [Fstring.rindex s c] is equivalent to
+   [Fstring.rindex_from s (Fstring.length s - 1) c]. *)
+
+val contains : ('a, 'b) t -> 'b char -> 'b bool
+               with 'a < 'b
+(** [Fstring.contains s c] tests if character [c]
+   appears in the string [s]. *)
+
+val contains_from : ('a, 'b) t -> 'b int ->
+                    'a char -{'b | Invalid_argument: 'b |}-> 'a bool
+                    with 'b < 'a
+(** [Fstring.contains_from s start c] tests if character [c]
+   appears in the substring of [s] starting from [start] to the end
+   of [s].
+   Raise [Invalid_argument] if [start] is not a valid index of [s]. *)
+
+val rcontains_from : ('a, 'b) t -> 'b int ->
+                    'a char -{'b | Invalid_argument: 'b |}-> 'a bool
+                    with 'b < 'a
+(** [Fstring.rcontains_from s stop c] tests if character [c]
+   appears in the substring of [s] starting from the beginning
+   of [s] to index [stop].
+   Raise [Invalid_argument] if [stop] is not a valid index of [s]. *)
+
+val uppercase : ('a, 'b) t -> ('a, 'b) t
+(** Return a copy of the argument, with all lowercase letters
+   translated to uppercase, including accented letters of the ISO
+   Latin-1 (8859-1) character set. *)
+
+val lowercase : ('a, 'b) t -> ('a, 'b) t
+(** Return a copy of the argument, with all uppercase letters
+   translated to lowercase, including accented letters of the ISO
+   Latin-1 (8859-1) character set. *)
+
+val capitalize : ('a, 'b) t -> ('a, 'b) t
+(** Return a copy of the argument, with the first letter set to uppercase. *)
+
+val uncapitalize : ('a, 'b) t -> ('a, 'b) t
+(** Return a copy of the argument, with the first letter set to lowercase. *)
+

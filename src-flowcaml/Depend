@@ -1,0 +1,476 @@
+../src-averell/avl_closure.cmo: ../src-averell/avl_closure.cmi 
+../src-averell/avl_closure.cmx: ../src-averell/avl_closure.cmi 
+../src-averell/avl_draw.cmo: ../src-averell/avl_graphics.cmo \
+    ../src-averell/avl_graphviz.cmi ../src-averell/avl_draw.cmi 
+../src-averell/avl_draw.cmx: ../src-averell/avl_graphics.cmx \
+    ../src-averell/avl_graphviz.cmx ../src-averell/avl_draw.cmi 
+../src-averell/avl_graphviz.cmo: ../src-averell/avl_graphviz.cmi 
+../src-averell/avl_graphviz.cmx: ../src-averell/avl_graphviz.cmi 
+../src-averell/avl_kernel.cmo: ../src-averell/avl_tarjan.cmi \
+    ../src-averell/avl_topo.cmi ../src-averell/avl_kernel.cmi 
+../src-averell/avl_kernel.cmx: ../src-averell/avl_tarjan.cmx \
+    ../src-averell/avl_topo.cmx ../src-averell/avl_kernel.cmi 
+../src-averell/avl_tarjan.cmo: ../src-averell/avl_tarjan.cmi 
+../src-averell/avl_tarjan.cmx: ../src-averell/avl_tarjan.cmi 
+../src-averell/avl_topo.cmo: ../src-averell/avl_topo.cmi 
+../src-averell/avl_topo.cmx: ../src-averell/avl_topo.cmi 
+../src-averell/demo.cmo: ../src-averell/avl_closure.cmi \
+    ../src-averell/avl_draw.cmi ../src-averell/avl_graphics.cmo \
+    ../src-averell/avl_kernel.cmi ../src-averell/avl_tarjan.cmi 
+../src-averell/demo.cmx: ../src-averell/avl_closure.cmx \
+    ../src-averell/avl_draw.cmx ../src-averell/avl_graphics.cmx \
+    ../src-averell/avl_kernel.cmx ../src-averell/avl_tarjan.cmx 
+../src-dalton/dalton_aux.cmo: ../src-dalton/dalton_aux.cmi 
+../src-dalton/dalton_aux.cmx: ../src-dalton/dalton_aux.cmi 
+../src-dalton/dalton_dumb.cmo: ../src-dalton/dalton_aux.cmi \
+    ../src-dalton/dalton_sig.cmo 
+../src-dalton/dalton_dumb.cmx: ../src-dalton/dalton_aux.cmx \
+    ../src-dalton/dalton_sig.cmx 
+../src-dalton/dalton_lib.cmo: ../src-dalton/dalton_lib.cmi 
+../src-dalton/dalton_lib.cmx: ../src-dalton/dalton_lib.cmi 
+../src-dalton/dalton_light.cmo: ../src-averell/avl_tarjan.cmi \
+    ../src-averell/avl_topo.cmi ../src-dalton/dalton_aux.cmi \
+    ../src-dalton/dalton_debug.cmo ../src-dalton/dalton_lib.cmi \
+    ../src-dalton/dalton_list.cmo ../src-dalton/dalton_sig.cmo 
+../src-dalton/dalton_light.cmx: ../src-averell/avl_tarjan.cmx \
+    ../src-averell/avl_topo.cmx ../src-dalton/dalton_aux.cmx \
+    ../src-dalton/dalton_debug.cmx ../src-dalton/dalton_lib.cmx \
+    ../src-dalton/dalton_list.cmx ../src-dalton/dalton_sig.cmx 
+../src-dalton/dalton_list.cmo: ../src-dalton/dalton_lib.cmi 
+../src-dalton/dalton_list.cmx: ../src-dalton/dalton_lib.cmx 
+../src-dalton/dalton.cmo: ../src-averell/avl_graphics.cmo \
+    ../src-averell/avl_tarjan.cmi ../src-averell/avl_topo.cmi \
+    ../src-dalton/dalton_aux.cmi ../src-dalton/dalton_debug.cmo \
+    ../src-dalton/dalton_lib.cmi ../src-dalton/dalton_list.cmo \
+    ../src-dalton/dalton_sig.cmo utils/standard.cmi ../src-dalton/dalton.cmi 
+../src-dalton/dalton.cmx: ../src-averell/avl_graphics.cmx \
+    ../src-averell/avl_tarjan.cmx ../src-averell/avl_topo.cmx \
+    ../src-dalton/dalton_aux.cmx ../src-dalton/dalton_debug.cmx \
+    ../src-dalton/dalton_lib.cmx ../src-dalton/dalton_list.cmx \
+    ../src-dalton/dalton_sig.cmx utils/standard.cmx ../src-dalton/dalton.cmi 
+../src-dalton/dalton_sig.cmo: ../src-dalton/dalton_aux.cmi 
+../src-dalton/dalton_sig.cmx: ../src-dalton/dalton_aux.cmx 
+../src-dalton/dalton_templates.cmo: ../src-averell/avl_graphics.cmo \
+    ../src-dalton/dalton_sig.cmo 
+../src-dalton/dalton_templates.cmx: ../src-averell/avl_graphics.cmx \
+    ../src-dalton/dalton_sig.cmx 
+../src-dalton/dalton.cmi: ../src-dalton/dalton_aux.cmi \
+    ../src-dalton/dalton_sig.cmo 
+utils/bool_solver.cmo: utils/lattice_solver.cmo 
+utils/bool_solver.cmx: utils/lattice_solver.cmx 
+utils/clflags.cmo: utils/config.cmo 
+utils/clflags.cmx: utils/config.cmx 
+utils/compare.cmo: utils/compare.cmi 
+utils/compare.cmx: utils/compare.cmi 
+utils/draw.cmo: ../src-averell/avl_graphics.cmo utils/graphps.cmi 
+utils/draw.cmx: ../src-averell/avl_graphics.cmx utils/graphps.cmx 
+utils/graphps.cmo: utils/graphps.cmi 
+utils/graphps.cmx: utils/graphps.cmi 
+utils/misc.cmo: utils/clflags.cmo 
+utils/misc.cmx: utils/clflags.cmx 
+utils/option.cmo: utils/option.cmi 
+utils/option.cmx: utils/option.cmi 
+utils/pole.cmo: utils/pole.cmi 
+utils/pole.cmx: utils/pole.cmi 
+utils/spole.cmo: utils/lattice_solver.cmo utils/pole.cmi 
+utils/spole.cmx: utils/lattice_solver.cmx utils/pole.cmx 
+utils/standard.cmo: utils/standard.cmi 
+utils/standard.cmx: utils/standard.cmi 
+utils/variance_solver.cmo: ../src-dalton/dalton_aux.cmi \
+    utils/lattice_solver.cmo 
+utils/variance_solver.cmx: ../src-dalton/dalton_aux.cmx \
+    utils/lattice_solver.cmx 
+parsing/asttypes.cmo: parsing/location.cmo 
+parsing/asttypes.cmx: parsing/location.cmx 
+parsing/lexer.cmo: parsing/location.cmo utils/misc.cmo parsing/parser.cmi 
+parsing/lexer.cmx: parsing/location.cmx utils/misc.cmx parsing/parser.cmx 
+parsing/linenum.cmo: utils/misc.cmo parsing/linenum.cmi 
+parsing/linenum.cmx: utils/misc.cmx parsing/linenum.cmi 
+parsing/location.cmo: parsing/linenum.cmi utils/terminfo.cmo 
+parsing/location.cmx: parsing/linenum.cmx utils/terminfo.cmx 
+parsing/longident.cmo: utils/misc.cmo 
+parsing/longident.cmx: utils/misc.cmx 
+parsing/parse.cmo: parsing/lexer.cmo parsing/location.cmo parsing/parser.cmi \
+    parsing/syntaxerr.cmo 
+parsing/parse.cmx: parsing/lexer.cmx parsing/location.cmx parsing/parser.cmx \
+    parsing/syntaxerr.cmx 
+parsing/parser.cmo: parsing/asttypes.cmo parsing/location.cmo \
+    parsing/longident.cmo parsing/parsetree.cmo parsing/syntaxerr.cmo \
+    parsing/parser.cmi 
+parsing/parser.cmx: parsing/asttypes.cmx parsing/location.cmx \
+    parsing/longident.cmx parsing/parsetree.cmx parsing/syntaxerr.cmx \
+    parsing/parser.cmi 
+parsing/parsetree.cmo: parsing/asttypes.cmo parsing/location.cmo \
+    parsing/longident.cmo 
+parsing/parsetree.cmx: parsing/asttypes.cmx parsing/location.cmx \
+    parsing/longident.cmx 
+parsing/syntaxerr.cmo: parsing/location.cmo 
+parsing/syntaxerr.cmx: parsing/location.cmx 
+parsing/parser.cmi: parsing/longident.cmo parsing/parsetree.cmo 
+stripping/gen_ast.cmo: parsing/asttypes.cmo utils/config.cmo \
+    utils/datastruct.cmo parsing/location.cmo parsing/longident.cmo \
+    stripping/oast.cmo utils/option.cmi parsing/parsetree.cmo \
+    utils/standard.cmi stripping/stripinfo.cmo 
+stripping/gen_ast.cmx: parsing/asttypes.cmx utils/config.cmx \
+    utils/datastruct.cmx parsing/location.cmx parsing/longident.cmx \
+    stripping/oast.cmx utils/option.cmx parsing/parsetree.cmx \
+    utils/standard.cmx stripping/stripinfo.cmx 
+stripping/gen_source.cmo: parsing/asttypes.cmo utils/datastruct.cmo \
+    parsing/location.cmo parsing/longident.cmo utils/misc.cmo \
+    stripping/oast.cmo utils/option.cmi parsing/parsetree.cmo \
+    utils/standard.cmi stripping/stripinfo.cmo 
+stripping/gen_source.cmx: parsing/asttypes.cmx utils/datastruct.cmx \
+    parsing/location.cmx parsing/longident.cmx utils/misc.cmx \
+    stripping/oast.cmx utils/option.cmx parsing/parsetree.cmx \
+    utils/standard.cmx stripping/stripinfo.cmx 
+stripping/oast.cmo: parsing/asttypes.cmo parsing/location.cmo \
+    parsing/longident.cmo 
+stripping/oast.cmx: parsing/asttypes.cmx parsing/location.cmx \
+    parsing/longident.cmx 
+stripping/stripinfo.cmo: utils/datastruct.cmo parsing/location.cmo \
+    parsing/parsetree.cmo 
+stripping/stripinfo.cmx: utils/datastruct.cmx parsing/location.cmx \
+    parsing/parsetree.cmx 
+types/constructor_description.cmo: ../src-dalton/dalton_aux.cmi \
+    utils/option.cmi types/solver.cmi types/subst.cmo types/types.cmo 
+types/constructor_description.cmx: ../src-dalton/dalton_aux.cmx \
+    utils/option.cmx types/solver.cmx types/subst.cmx types/types.cmx 
+types/env.cmo: utils/config.cmo types/ident.cmi types/level.cmo \
+    parsing/location.cmo parsing/longident.cmo utils/misc.cmo \
+    types/pat_context.cmo types/path.cmi types/principal.cmi types/solver.cmi \
+    types/subst.cmo utils/tbl.cmo types/type_constructor.cmo types/types.cmo 
+types/env.cmx: utils/config.cmx types/ident.cmx types/level.cmx \
+    parsing/location.cmx parsing/longident.cmx utils/misc.cmx \
+    types/pat_context.cmx types/path.cmx types/principal.cmx types/solver.cmx \
+    types/subst.cmx utils/tbl.cmx types/type_constructor.cmx types/types.cmx 
+types/exception_declaration.cmo: ../src-dalton/dalton_aux.cmi \
+    utils/option.cmi types/solver.cmi types/subst.cmo types/types.cmo 
+types/exception_declaration.cmx: ../src-dalton/dalton_aux.cmx \
+    utils/option.cmx types/solver.cmx types/subst.cmx types/types.cmx 
+types/expr_context.cmo: types/ident.cmi 
+types/expr_context.cmx: types/ident.cmx 
+types/fkind.cmo: ../src-dalton/dalton_aux.cmi ../src-dalton/dalton_lib.cmi \
+    utils/misc.cmo types/path.cmi 
+types/fkind.cmx: ../src-dalton/dalton_aux.cmx ../src-dalton/dalton_lib.cmx \
+    utils/misc.cmx types/path.cmx 
+types/ident.cmo: utils/clflags.cmo utils/option.cmi types/ident.cmi 
+types/ident.cmx: utils/clflags.cmx utils/option.cmx types/ident.cmi 
+types/label_description.cmo: parsing/asttypes.cmo \
+    ../src-dalton/dalton_aux.cmi utils/option.cmi types/solver.cmi \
+    types/subst.cmo types/types.cmo 
+types/label_description.cmx: parsing/asttypes.cmx \
+    ../src-dalton/dalton_aux.cmx utils/option.cmx types/solver.cmx \
+    types/subst.cmx types/types.cmx 
+types/level.cmo: types/path.cmi 
+types/level.cmx: types/path.cmx 
+types/pat_context.cmo: utils/datastruct.cmo types/ident.cmi 
+types/pat_context.cmx: utils/datastruct.cmx types/ident.cmx 
+types/path.cmo: types/ident.cmi types/path.cmi 
+types/path.cmx: types/ident.cmx types/path.cmi 
+types/pattern.cmo: parsing/asttypes.cmo types/constructor_description.cmo \
+    types/env.cmo types/ident.cmi types/label_description.cmo \
+    parsing/location.cmo types/pat_context.cmo types/path.cmi \
+    types/solver.cmi 
+types/pattern.cmx: parsing/asttypes.cmx types/constructor_description.cmx \
+    types/env.cmx types/ident.cmx types/label_description.cmx \
+    parsing/location.cmx types/pat_context.cmx types/path.cmx \
+    types/solver.cmx 
+types/predef.cmo: utils/clflags.cmo ../src-dalton/dalton_aux.cmi \
+    types/env.cmo types/fkind.cmo types/ident.cmi parsing/longident.cmo \
+    utils/misc.cmo types/path.cmi types/solver.cmi types/type_constructor.cmo \
+    types/type_declaration.cmo types/types.cmo 
+types/predef.cmx: utils/clflags.cmx ../src-dalton/dalton_aux.cmx \
+    types/env.cmx types/fkind.cmx types/ident.cmx parsing/longident.cmx \
+    utils/misc.cmx types/path.cmx types/solver.cmx types/type_constructor.cmx \
+    types/type_declaration.cmx types/types.cmx 
+types/principal.cmo: ../src-averell/avl_closure.cmi \
+    ../src-averell/avl_draw.cmi ../src-averell/avl_graphics.cmo \
+    ../src-averell/avl_kernel.cmi utils/datastruct.cmo types/principal.cmi 
+types/principal.cmx: ../src-averell/avl_closure.cmx \
+    ../src-averell/avl_draw.cmx ../src-averell/avl_graphics.cmx \
+    ../src-averell/avl_kernel.cmx utils/datastruct.cmx types/principal.cmi 
+types/print_types.cmo: parsing/asttypes.cmo types/constructor_description.cmo \
+    ../src-dalton/dalton_aux.cmi types/exception_declaration.cmo \
+    types/fkind.cmo types/ident.cmi types/label_description.cmo \
+    types/level.cmo utils/misc.cmo types/path.cmi types/type_declaration.cmo \
+    types/types.cmo types/value_description.cmo 
+types/print_types.cmx: parsing/asttypes.cmx types/constructor_description.cmx \
+    ../src-dalton/dalton_aux.cmx types/exception_declaration.cmx \
+    types/fkind.cmx types/ident.cmx types/label_description.cmx \
+    types/level.cmx utils/misc.cmx types/path.cmx types/type_declaration.cmx \
+    types/types.cmx types/value_description.cmx 
+types/solver.cmo: ../src-dalton/dalton.cmi ../src-dalton/dalton_aux.cmi \
+    ../src-dalton/dalton_templates.cmo utils/draw.cmo types/env.cmo \
+    types/level.cmo types/path.cmi utils/standard.cmi \
+    types/type_constructor.cmo types/types.cmo types/solver.cmi 
+types/solver.cmx: ../src-dalton/dalton.cmx ../src-dalton/dalton_aux.cmx \
+    ../src-dalton/dalton_templates.cmx utils/draw.cmx types/env.cmx \
+    types/level.cmx types/path.cmx utils/standard.cmx \
+    types/type_constructor.cmx types/types.cmx types/solver.cmi 
+types/subst.cmo: types/ident.cmi types/level.cmo utils/misc.cmo \
+    types/path.cmi types/solver.cmi utils/tbl.cmo types/type_constructor.cmo \
+    types/types.cmo 
+types/subst.cmx: types/ident.cmx types/level.cmx utils/misc.cmx \
+    types/path.cmx types/solver.cmx utils/tbl.cmx types/type_constructor.cmx \
+    types/types.cmx 
+types/type_constructor.cmo: ../src-dalton/dalton_aux.cmi types/fkind.cmo \
+    types/path.cmi 
+types/type_constructor.cmx: ../src-dalton/dalton_aux.cmx types/fkind.cmx \
+    types/path.cmx 
+types/type_declaration.cmo: ../src-dalton/dalton_aux.cmi utils/option.cmi \
+    types/solver.cmi types/subst.cmo types/types.cmo 
+types/type_declaration.cmx: ../src-dalton/dalton_aux.cmx utils/option.cmx \
+    types/solver.cmx types/subst.cmx types/types.cmx 
+types/types.cmo: parsing/asttypes.cmo ../src-dalton/dalton_aux.cmi \
+    types/expr_context.cmo types/fkind.cmo types/ident.cmi types/level.cmo \
+    types/path.cmi types/principal.cmi types/solver.cmi 
+types/types.cmx: parsing/asttypes.cmx ../src-dalton/dalton_aux.cmx \
+    types/expr_context.cmx types/fkind.cmx types/ident.cmx types/level.cmx \
+    types/path.cmx types/principal.cmx types/solver.cmx 
+types/value_description.cmo: ../src-dalton/dalton_aux.cmi types/env.cmo \
+    types/expr_context.cmo types/solver.cmi types/subst.cmo \
+    types/type_constructor.cmo types/types.cmo 
+types/value_description.cmx: ../src-dalton/dalton_aux.cmx types/env.cmx \
+    types/expr_context.cmx types/solver.cmx types/subst.cmx \
+    types/type_constructor.cmx types/types.cmx 
+types/path.cmi: types/ident.cmi 
+types/principal.cmi: parsing/parsetree.cmo 
+types/solver.cmi: ../src-dalton/dalton_aux.cmi utils/draw.cmo types/level.cmo \
+    types/path.cmi types/type_constructor.cmo 
+typing/comp_unit.cmo: types/env.cmo typing/include_error.cmo \
+    typing/include_mod.cmo parsing/parsetree.cmo types/predef.cmo \
+    types/principal.cmi types/print_types.cmo types/solver.cmi \
+    typing/transl_levelexpr.cmo typing/type_mod.cmo typing/typedtree.cmo \
+    types/types.cmo 
+typing/comp_unit.cmx: types/env.cmx typing/include_error.cmx \
+    typing/include_mod.cmx parsing/parsetree.cmx types/predef.cmx \
+    types/principal.cmx types/print_types.cmx types/solver.cmx \
+    typing/transl_levelexpr.cmx typing/type_mod.cmx typing/typedtree.cmx \
+    types/types.cmx 
+typing/include_error.cmo: ../src-dalton/dalton_aux.cmi types/fkind.cmo \
+    types/ident.cmi types/level.cmo utils/misc.cmo types/print_types.cmo \
+    types/types.cmo types/value_description.cmo 
+typing/include_error.cmx: ../src-dalton/dalton_aux.cmx types/fkind.cmx \
+    types/ident.cmx types/level.cmx utils/misc.cmx types/print_types.cmx \
+    types/types.cmx types/value_description.cmx 
+typing/include_mod.cmo: types/env.cmo types/ident.cmi \
+    typing/include_error.cmo types/level.cmo utils/misc.cmo typing/mtype.cmo \
+    types/path.cmi types/print_types.cmo types/subst.cmo utils/tbl.cmo \
+    typing/transl_exception.cmo typing/transl_leveldecl.cmo \
+    typing/transl_levelexpr.cmo typing/transl_typedecl.cmo \
+    typing/transl_value.cmo typing/typedtree.cmo types/types.cmo 
+typing/include_mod.cmx: types/env.cmx types/ident.cmx \
+    typing/include_error.cmx types/level.cmx utils/misc.cmx typing/mtype.cmx \
+    types/path.cmx types/print_types.cmx types/subst.cmx utils/tbl.cmx \
+    typing/transl_exception.cmx typing/transl_leveldecl.cmx \
+    typing/transl_levelexpr.cmx typing/transl_typedecl.cmx \
+    typing/transl_value.cmx typing/typedtree.cmx types/types.cmx 
+typing/mtype.cmo: types/constructor_description.cmo types/env.cmo \
+    types/exception_declaration.cmo types/ident.cmi \
+    types/label_description.cmo types/level.cmo types/path.cmi \
+    types/solver.cmi typing/transl_leveldecl.cmo types/type_constructor.cmo \
+    types/type_declaration.cmo types/types.cmo types/value_description.cmo 
+typing/mtype.cmx: types/constructor_description.cmx types/env.cmx \
+    types/exception_declaration.cmx types/ident.cmx \
+    types/label_description.cmx types/level.cmx types/path.cmx \
+    types/solver.cmx typing/transl_leveldecl.cmx types/type_constructor.cmx \
+    types/type_declaration.cmx types/types.cmx types/value_description.cmx 
+typing/transl_exception.cmo: ../src-dalton/dalton_aux.cmi types/env.cmo \
+    types/exception_declaration.cmo types/fkind.cmo typing/include_error.cmo \
+    parsing/location.cmo parsing/parsetree.cmo types/path.cmi \
+    types/solver.cmi typing/transl_typeexpr.cmo types/types.cmo 
+typing/transl_exception.cmx: ../src-dalton/dalton_aux.cmx types/env.cmx \
+    types/exception_declaration.cmx types/fkind.cmx typing/include_error.cmx \
+    parsing/location.cmx parsing/parsetree.cmx types/path.cmx \
+    types/solver.cmx typing/transl_typeexpr.cmx types/types.cmx 
+typing/transl_leveldecl.cmo: types/env.cmo types/ident.cmi \
+    typing/include_error.cmo types/level.cmo parsing/location.cmo \
+    parsing/parsetree.cmo types/path.cmi typing/transl_levelexpr.cmo \
+    types/types.cmo 
+typing/transl_leveldecl.cmx: types/env.cmx types/ident.cmx \
+    typing/include_error.cmx types/level.cmx parsing/location.cmx \
+    parsing/parsetree.cmx types/path.cmx typing/transl_levelexpr.cmx \
+    types/types.cmx 
+typing/transl_levelexpr.cmo: types/env.cmo typing/include_error.cmo \
+    types/level.cmo parsing/parsetree.cmo types/solver.cmi 
+typing/transl_levelexpr.cmx: types/env.cmx typing/include_error.cmx \
+    types/level.cmx parsing/parsetree.cmx types/solver.cmx 
+typing/transl_typedecl.cmo: parsing/asttypes.cmo utils/bool_solver.cmo \
+    types/constructor_description.cmo ../src-dalton/dalton_aux.cmi \
+    types/env.cmo types/fkind.cmo types/ident.cmi typing/include_error.cmo \
+    types/label_description.cmo parsing/location.cmo parsing/longident.cmo \
+    utils/misc.cmo utils/option.cmi parsing/parsetree.cmo types/path.cmi \
+    types/solver.cmi utils/standard.cmi stripping/stripinfo.cmo \
+    types/subst.cmo typing/transl_typeexpr.cmo types/type_constructor.cmo \
+    types/type_declaration.cmo types/types.cmo utils/variance_solver.cmo 
+typing/transl_typedecl.cmx: parsing/asttypes.cmx utils/bool_solver.cmx \
+    types/constructor_description.cmx ../src-dalton/dalton_aux.cmx \
+    types/env.cmx types/fkind.cmx types/ident.cmx typing/include_error.cmx \
+    types/label_description.cmx parsing/location.cmx parsing/longident.cmx \
+    utils/misc.cmx utils/option.cmx parsing/parsetree.cmx types/path.cmx \
+    types/solver.cmx utils/standard.cmx stripping/stripinfo.cmx \
+    types/subst.cmx typing/transl_typeexpr.cmx types/type_constructor.cmx \
+    types/type_declaration.cmx types/types.cmx utils/variance_solver.cmx 
+typing/transl_typeexpr.cmo: ../src-dalton/dalton_aux.cmi types/env.cmo \
+    types/fkind.cmo types/level.cmo parsing/location.cmo \
+    parsing/longident.cmo parsing/parsetree.cmo types/predef.cmo \
+    types/solver.cmi utils/standard.cmi stripping/stripinfo.cmo \
+    typing/transl_levelexpr.cmo types/type_constructor.cmo types/types.cmo 
+typing/transl_typeexpr.cmx: ../src-dalton/dalton_aux.cmx types/env.cmx \
+    types/fkind.cmx types/level.cmx parsing/location.cmx \
+    parsing/longident.cmx parsing/parsetree.cmx types/predef.cmx \
+    types/solver.cmx utils/standard.cmx stripping/stripinfo.cmx \
+    typing/transl_levelexpr.cmx types/type_constructor.cmx types/types.cmx 
+typing/transl_value.cmo: types/env.cmo types/expr_context.cmo types/fkind.cmo \
+    typing/include_error.cmo parsing/parsetree.cmo typing/transl_typeexpr.cmo \
+    typing/type_core.cmo types/types.cmo types/value_description.cmo 
+typing/transl_value.cmx: types/env.cmx types/expr_context.cmx types/fkind.cmx \
+    typing/include_error.cmx parsing/parsetree.cmx typing/transl_typeexpr.cmx \
+    typing/type_core.cmx types/types.cmx types/value_description.cmx 
+typing/type_core.cmo: parsing/asttypes.cmo types/bound.cmo \
+    types/constructor_description.cmo ../src-dalton/dalton_aux.cmi \
+    types/env.cmo types/exception_declaration.cmo types/expr_context.cmo \
+    types/ident.cmi types/label_description.cmo types/level.cmo \
+    parsing/location.cmo parsing/longident.cmo utils/option.cmi \
+    parsing/parsetree.cmo types/pat_context.cmo types/path.cmi \
+    types/predef.cmo types/solver.cmi typing/transl_typeexpr.cmo \
+    typing/typedtree.cmo types/types.cmo types/value_description.cmo 
+typing/type_core.cmx: parsing/asttypes.cmx types/bound.cmx \
+    types/constructor_description.cmx ../src-dalton/dalton_aux.cmx \
+    types/env.cmx types/exception_declaration.cmx types/expr_context.cmx \
+    types/ident.cmx types/label_description.cmx types/level.cmx \
+    parsing/location.cmx parsing/longident.cmx utils/option.cmx \
+    parsing/parsetree.cmx types/pat_context.cmx types/path.cmx \
+    types/predef.cmx types/solver.cmx typing/transl_typeexpr.cmx \
+    typing/typedtree.cmx types/types.cmx types/value_description.cmx 
+typing/typedtree.cmo: parsing/asttypes.cmo types/env.cmo \
+    types/expr_context.cmo types/ident.cmi parsing/location.cmo \
+    utils/misc.cmo types/pat_context.cmo types/path.cmi types/solver.cmi \
+    types/types.cmo 
+typing/typedtree.cmx: parsing/asttypes.cmx types/env.cmx \
+    types/expr_context.cmx types/ident.cmx parsing/location.cmx \
+    utils/misc.cmx types/pat_context.cmx types/path.cmx types/solver.cmx \
+    types/types.cmx 
+typing/type_mod.cmo: utils/datastruct.cmo types/env.cmo \
+    types/expr_context.cmo types/ident.cmi typing/include_error.cmo \
+    typing/include_mod.cmo parsing/location.cmo parsing/longident.cmo \
+    utils/misc.cmo typing/mtype.cmo parsing/parsetree.cmo \
+    types/print_types.cmo types/solver.cmi types/subst.cmo \
+    typing/transl_exception.cmo typing/transl_leveldecl.cmo \
+    typing/transl_levelexpr.cmo typing/transl_typedecl.cmo \
+    typing/transl_typeexpr.cmo typing/transl_value.cmo typing/type_core.cmo \
+    typing/typedtree.cmo types/types.cmo types/value_description.cmo 
+typing/type_mod.cmx: utils/datastruct.cmx types/env.cmx \
+    types/expr_context.cmx types/ident.cmx typing/include_error.cmx \
+    typing/include_mod.cmx parsing/location.cmx parsing/longident.cmx \
+    utils/misc.cmx typing/mtype.cmx parsing/parsetree.cmx \
+    types/print_types.cmx types/solver.cmx types/subst.cmx \
+    typing/transl_exception.cmx typing/transl_leveldecl.cmx \
+    typing/transl_levelexpr.cmx typing/transl_typedecl.cmx \
+    typing/transl_typeexpr.cmx typing/transl_value.cmx typing/type_core.cmx \
+    typing/typedtree.cmx types/types.cmx types/value_description.cmx 
+driver/compile.cmo: utils/clflags.cmo typing/comp_unit.cmo utils/config.cmo \
+    types/env.cmo stripping/gen_ast.cmo stripping/gen_source.cmo \
+    parsing/location.cmo utils/misc.cmo parsing/parse.cmo \
+    parsing/parsetree.cmo types/predef.cmo types/print_types.cmo \
+    stripping/stripinfo.cmo typing/typedtree.cmo types/types.cmo 
+driver/compile.cmx: utils/clflags.cmx typing/comp_unit.cmx utils/config.cmx \
+    types/env.cmx stripping/gen_ast.cmx stripping/gen_source.cmx \
+    parsing/location.cmx utils/misc.cmx parsing/parse.cmx \
+    parsing/parsetree.cmx types/predef.cmx types/print_types.cmx \
+    stripping/stripinfo.cmx typing/typedtree.cmx types/types.cmx 
+driver/errors.cmo: ../src-averell/avl_graphics.cmo typing/comp_unit.cmo \
+    types/env.cmo typing/include_error.cmo parsing/lexer.cmo \
+    parsing/location.cmo utils/misc.cmo parsing/syntaxerr.cmo \
+    typing/transl_exception.cmo typing/transl_leveldecl.cmo \
+    typing/transl_typedecl.cmo typing/transl_typeexpr.cmo \
+    typing/type_core.cmo typing/type_mod.cmo 
+driver/errors.cmx: ../src-averell/avl_graphics.cmx typing/comp_unit.cmx \
+    types/env.cmx typing/include_error.cmx parsing/lexer.cmx \
+    parsing/location.cmx utils/misc.cmx parsing/syntaxerr.cmx \
+    typing/transl_exception.cmx typing/transl_leveldecl.cmx \
+    typing/transl_typedecl.cmx typing/transl_typeexpr.cmx \
+    typing/type_core.cmx typing/type_mod.cmx 
+driver/formatters.cmo: utils/config.cmo types/solver.cmi utils/terminfo.cmo 
+driver/formatters.cmx: utils/config.cmx types/solver.cmx utils/terminfo.cmx 
+driver/main.cmo: utils/clflags.cmo driver/compile.cmo utils/config.cmo \
+    ../src-dalton/dalton_debug.cmo driver/errors.cmo driver/formatters.cmo 
+driver/main.cmx: utils/clflags.cmx driver/compile.cmx utils/config.cmx \
+    ../src-dalton/dalton_debug.cmx driver/errors.cmx driver/formatters.cmx 
+toplevel/topgraph.cmo: ../src-averell/avl_graphics.cmo utils/clflags.cmo \
+    utils/draw.cmo types/ident.cmi types/principal.cmi types/types.cmo \
+    types/value_description.cmo 
+toplevel/topgraph.cmx: ../src-averell/avl_graphics.cmx utils/clflags.cmx \
+    utils/draw.cmx types/ident.cmx types/principal.cmx types/types.cmx \
+    types/value_description.cmx 
+toplevel/toploop.cmo: utils/clflags.cmo utils/config.cmo types/env.cmo \
+    driver/errors.cmo types/expr_context.cmo driver/formatters.cmo \
+    types/ident.cmi types/level.cmo parsing/lexer.cmo parsing/location.cmo \
+    parsing/longident.cmo parsing/parse.cmo parsing/parser.cmi \
+    parsing/parsetree.cmo types/predef.cmo types/principal.cmi \
+    types/print_types.cmo types/solver.cmi utils/terminfo.cmo \
+    toplevel/topgraph.cmo typing/type_core.cmo typing/type_mod.cmo \
+    typing/typedtree.cmo types/types.cmo types/value_description.cmo 
+toplevel/toploop.cmx: utils/clflags.cmx utils/config.cmx types/env.cmx \
+    driver/errors.cmx types/expr_context.cmx driver/formatters.cmx \
+    types/ident.cmx types/level.cmx parsing/lexer.cmx parsing/location.cmx \
+    parsing/longident.cmx parsing/parse.cmx parsing/parser.cmx \
+    parsing/parsetree.cmx types/predef.cmx types/principal.cmx \
+    types/print_types.cmx types/solver.cmx utils/terminfo.cmx \
+    toplevel/topgraph.cmx typing/type_core.cmx typing/type_mod.cmx \
+    typing/typedtree.cmx types/types.cmx types/value_description.cmx 
+toplevel/topmain.cmo: utils/clflags.cmo driver/errors.cmo \
+    driver/formatters.cmo toplevel/toploop.cmo 
+toplevel/topmain.cmx: utils/clflags.cmx driver/errors.cmx \
+    driver/formatters.cmx toplevel/toploop.cmx 
+tools/depend.cmo: utils/datastruct.cmo parsing/location.cmo \
+    parsing/longident.cmo parsing/parsetree.cmo 
+tools/depend.cmx: utils/datastruct.cmx parsing/location.cmx \
+    parsing/longident.cmx parsing/parsetree.cmx 
+tools/flowcamldep.cmo: utils/config.cmo utils/datastruct.cmo tools/depend.cmo \
+    parsing/lexer.cmo parsing/location.cmo parsing/longident.cmo \
+    utils/misc.cmo parsing/parse.cmo parsing/parsetree.cmo \
+    parsing/syntaxerr.cmo 
+tools/flowcamldep.cmx: utils/config.cmx utils/datastruct.cmx tools/depend.cmx \
+    parsing/lexer.cmx parsing/location.cmx parsing/longident.cmx \
+    utils/misc.cmx parsing/parse.cmx parsing/parsetree.cmx \
+    parsing/syntaxerr.cmx 
+tools/flowcamlmerge.cmo: utils/config.cmo 
+tools/flowcamlmerge.cmx: utils/config.cmx 
+tools/flowcamlpol.cmo: ../src-averell/avl_graphics.cmo \
+    ../src-averell/avl_graphviz.cmi utils/config.cmo types/principal.cmi 
+tools/flowcamlpol.cmx: ../src-averell/avl_graphics.cmx \
+    ../src-averell/avl_graphviz.cmx utils/config.cmx types/principal.cmx 
+docgen/doc_comments.cmo: docgen/doc_lexer.cmo docgen/doc_parser.cmi \
+    docgen/doc_parsetree.cmo parsing/location.cmo 
+docgen/doc_comments.cmx: docgen/doc_lexer.cmx docgen/doc_parser.cmx \
+    docgen/doc_parsetree.cmx parsing/location.cmx 
+docgen/doc_gen.cmo: utils/datastruct.cmo docgen/doc_comments.cmo \
+    docgen/doc_latex.cmo docgen/doc_parsetree.cmo types/ident.cmi \
+    parsing/location.cmo parsing/parsetree.cmo types/types.cmo 
+docgen/doc_gen.cmx: utils/datastruct.cmx docgen/doc_comments.cmx \
+    docgen/doc_latex.cmx docgen/doc_parsetree.cmx types/ident.cmx \
+    parsing/location.cmx parsing/parsetree.cmx types/types.cmx 
+docgen/doc_images.cmo: ../src-averell/avl_graphics.cmo utils/draw.cmo \
+    utils/graphps.cmi types/value_description.cmo 
+docgen/doc_images.cmx: ../src-averell/avl_graphics.cmx utils/draw.cmx \
+    utils/graphps.cmx types/value_description.cmx 
+docgen/doc_latex.cmo: docgen/doc_images.cmo docgen/doc_parsetree.cmo \
+    types/ident.cmi types/level.cmo parsing/longident.cmo \
+    parsing/parsetree.cmo types/path.cmi types/print_types.cmo \
+    types/types.cmo 
+docgen/doc_latex.cmx: docgen/doc_images.cmx docgen/doc_parsetree.cmx \
+    types/ident.cmx types/level.cmx parsing/longident.cmx \
+    parsing/parsetree.cmx types/path.cmx types/print_types.cmx \
+    types/types.cmx 
+docgen/doc_lexer.cmo: docgen/doc_parser.cmi 
+docgen/doc_lexer.cmx: docgen/doc_parser.cmx 
+docgen/doc_main.cmo: driver/compile.cmo utils/config.cmo \
+    docgen/doc_comments.cmo docgen/doc_gen.cmo docgen/doc_images.cmo \
+    docgen/doc_latex.cmo types/env.cmo driver/errors.cmo parsing/parse.cmo 
+docgen/doc_main.cmx: driver/compile.cmx utils/config.cmx \
+    docgen/doc_comments.cmx docgen/doc_gen.cmx docgen/doc_images.cmx \
+    docgen/doc_latex.cmx types/env.cmx driver/errors.cmx parsing/parse.cmx 
+docgen/doc_parser.cmo: docgen/doc_parsetree.cmo docgen/doc_parser.cmi 
+docgen/doc_parser.cmx: docgen/doc_parsetree.cmx docgen/doc_parser.cmi 
+docgen/doc_parser.cmi: docgen/doc_parsetree.cmo 

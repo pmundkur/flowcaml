@@ -1,0 +1,62 @@
+(**************************************************************************)
+(*                                                                        *)
+(*                               Flow Caml                                *)
+(*                                                                        *)
+(*          Vincent Simonet, Projet Cristal, INRIA Rocquencourt           *)
+(*                                                                        *)
+(*  Copyright 2002, 2003 Institut National de Recherche en Informatique   *)
+(*  et en Automatique.  All rights reserved.  This file is distributed    *)
+(*  under the terms of the GNU Library General Public License, with the   *)
+(*  special exception on linking described in file ../LICENSE.            *)
+(*                                                                        *)
+(*  Author contact: Vincent.Simonet@inria.fr                              *)
+(*  Software page: http://cristal.inria.fr/~simonet/soft/flowcaml/        *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* $Id: random.fmli,v 1.2 2003/06/26 13:32:53 simonet Exp $ *)
+
+(** Pseudo-random number generator (PRNG). *)
+
+val init : !random int -{!random ||}-> unit
+(** Initialize the generator, using the argument as a seed.
+     The same seed will always yield the same sequence of numbers. *)
+
+val full_init : ([< !random] int, !random) array -{!random ||}-> unit
+(** Same as {!Random.init} but takes more data as seed. *)
+
+val self_init : unit -{!random ||}-> unit
+(** Initialize the generator with a more-or-less random seed chosen
+   in a system-dependent way. *)
+
+val bits : unit -{!random ||}-> !random int
+(** Return 30 random bits in a nonnegative integer. *)
+
+val int : 'a int -{!random ||}-> 'a int
+          with !random < 'a
+(** [Random.int bound] returns a random integer between 0 (inclusive)
+     and [bound] (exclusive).  [bound] must be more than 0 and less
+     than 2{^30}. *)
+
+val float : 'a float -{!random ||}-> 'a float
+            with !random < 'a
+(** [Random.float bound] returns a random floating-point number
+   between 0 (inclusive) and [bound] (exclusive).  If [bound] is
+   negative, the result is negative.  If [bound] is 0, the result
+   is 0. *)
+
+val bool : unit -{!random ||}-> !random bool
+(** [Random.bool ()] returns [true] or [false] with probability 0.5 each. *)
+
+type (='a:level, #'b:level) state
+(** Values of this type are used to store the current state of the
+   generator. *)
+
+val get_state : unit -> (!random, !random) state
+(** Returns the current state of the generator.  This is useful for
+   checkpointing computations that use the PRNG. *)
+
+val set_state : ([< !random], !random) state -{!random ||}-> unit
+(** Resets the state of the generator to some previous state returned by
+   {!Random.get_state}. *)
+

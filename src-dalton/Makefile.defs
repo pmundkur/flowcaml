@@ -1,0 +1,30 @@
+##########################################################################
+#                                                                        #
+#                                  Dalton                                #
+#                      an efficient implementation of                    #
+#                 type inference with structural subtyping               #
+#                                                                        #
+#          Vincent Simonet, Projet Cristal, INRIA Rocquencourt           #
+#                                                                        #
+#  Copyright 2002, 2003 Institut National de Recherche en Informatique   #
+#  et en Automatique.  All rights reserved.  This file is distributed    #
+#  under the terms of the GNU Library General Public License, with the   #
+#  special exception on linking described in file LICENSE.               #
+#                                                                        #
+#  Author contact: Vincent.Simonet@inria.fr                              #
+#  Software page: http://cristal.inria.fr/~simonet/soft/dalton/          #
+#                                                                        #
+##########################################################################
+
+
+
+# Compilation units of the Dalton library
+DALTON.CU= dalton_lib dalton_tree dalton_list dalton_debug dalton_aux \
+  dalton_sig dalton_templates dalton_dumb dalton_light dalton
+
+# Object files
+DALTON.CMO= $(DALTON.CU:%=%.cmo)
+DALTON.CMX= $(DALTON.CU:%=%.cmx)
+
+DALTON.INTERFACES= dalton_aux.cmi dalton_sig.cmi dalton_templates.cmi \
+  dalton_dumb.cmi dalton.cmi

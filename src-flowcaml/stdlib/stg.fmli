@@ -1,0 +1,113 @@
+(**************************************************************************)
+(*                                                                        *)
+(*                               Flow Caml                                *)
+(*                                                                        *)
+(*          Vincent Simonet, Projet Cristal, INRIA Rocquencourt           *)
+(*                                                                        *)
+(*  Copyright 2002 Institut National de Recherche en Informatique et en   *)
+(*  Automatique.  All rights reserved.  This file is distributed under    *)
+(*  the terms of the GNU Library General Public License, with the         *)
+(*  special exception on linking described in file ../LICENSE.            *)
+(*                                                                        *)
+(*  Author contact: Vincent.Simonet@inria.fr                              *)
+(*  Software page: http://cristal.inria.fr/~simonet/soft/flowcaml/        *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* $Id: stg.fmli,v 1.1 2002/12/23 12:40:09 simonet Exp $ *)
+
+(** Immutable strings. *)
+
+val length : 'a stg -> 'a int
+(** Return the length (number of characters) of the given string. *)
+
+val get : 'a stg -> 'a int -{'b | Invalid_argument: 'b |}-> 'a char
+          with 'a < 'b
+(** [Stg.get s n] returns character number [n] in string [s].
+   The first character is character number 0.
+   The last character is character number [String.length s - 1].
+   Raise [Invalid_argument] if [n] is outside the range
+   0 to [(Stg.length s - 1)].
+ *)
+
+val sub : 'a stg -> 'a int -> 'a int -{'b | Invalid_argument: 'b |}-> 'a stg
+          with 'a < 'b
+(** [Stg.sub s start len] returns a fresh string of length [len],
+   containing the characters number [start] to [start + len - 1]
+   of string [s].
+   Raise [Invalid_argument] if [start] and [len] do not
+   designate a valid substring of [s]; that is, if [start < 0],
+   or [len < 0], or [start + len > ]{!Stg.length}[ s]. *)
+
+val concat : 'a stg -> ('a stg, 'a) list -> 'a stg
+(** [Stg.concat sep sl] concatenates the list of strings [sl],
+   inserting the separator string [sep] between each. *)
+
+val escaped : 'a stg -> 'a stg
+(** Return a copy of the argument, with special characters
+   represented by escape sequences, following the lexical
+   conventions of Objective Caml.  If there is no special
+   character in the argument, return the original string itself,
+   not a copy. *)
+
+val index : 'a stg -> 'a char -{'b | Not_found: 'b|}-> 'a int
+            with 'a < 'b
+(** [Stg.index s c] returns the position of the leftmost
+   occurrence of character [c] in string [s].
+   Raise [Not_found] if [c] does not occur in [s]. *)
+
+val rindex : 'a stg -> 'a char -{'b | Not_found: 'b|}-> 'a int
+             with 'a < 'b
+(** [Stg.rindex s c] returns the position of the rightmost
+   occurrence of character [c] in string [s].
+   Raise [Not_found] if [c] does not occur in [s]. *)
+
+val index_from : 'a stg -> 'a int -> 'b char
+                 -{'c | Invalid_argument: 'c |}-> 'b int
+                 with 'a < 'b, 'c
+(** Same as {!Stg.index}, but start
+   searching at the character position given as second argument.
+   [Stg.index s c] is equivalent to [Stg.index_from s 0 c].*)
+val rindex_from : 'a stg -> 'a int -> 'b char
+                  -{'c | Invalid_argument: 'c |}-> 'b int
+                  with 'a < 'b, 'c
+(** Same as {!Stg.rindex}, but start
+   searching at the character position given as second argument.
+   [Stg.rindex s c] is equivalent to
+   [Stg.rindex_from s (Stg.length s - 1) c]. *)
+
+val contains : 'a stg -> 'a char -> 'a bool
+(** [Stg.contains s c] tests if character [c]
+   appears in the string [s]. *)
+
+val contains_from : 'a stg -> 'a int -> 'b char
+                    -{'c | Invalid_argument: 'c |}-> 'b bool
+                    with 'a < 'b, 'c
+(** [Stg.contains_from s start c] tests if character [c]
+   appears in the substring of [s] starting from [start] to the end
+   of [s].
+   Raise [Invalid_argument] if [start] is not a valid index of [s]. *)
+
+val rcontains_from : 'a stg -> 'a int -> 'b char
+                     -{'c | Invalid_argument: 'c |}-> 'b bool
+                     with 'a < 'b, 'c
+(** [Stg.rcontains_from s stop c] tests if character [c]
+   appears in the substring of [s] starting from the beginning
+   of [s] to index [stop].
+   Raise [Invalid_argument] if [stop] is not a valid index of [s]. *)
+
+val uppercase : 'a stg -> 'a stg
+(** Return a copy of the argument, with all lowercase letters
+   translated to uppercase, including accented letters of the ISO
+   Latin-1 (8859-1) character set. *)
+
+val lowercase : 'a stg -> 'a stg
+(** Return a copy of the argument, with all uppercase letters
+   translated to lowercase, including accented letters of the ISO
+   Latin-1 (8859-1) character set. *)
+
+val capitalize : 'a stg -> 'a stg
+(** Return a copy of the argument, with the first letter set to uppercase. *)
+
+val uncapitalize : 'a stg -> 'a stg
+(** Return a copy of the argument, with the first letter set to lowercase. *)

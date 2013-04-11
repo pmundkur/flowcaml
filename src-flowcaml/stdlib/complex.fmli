@@ -1,0 +1,89 @@
+(**************************************************************************)
+(*                                                                        *)
+(*                               Flow Caml                                *)
+(*                                                                        *)
+(*          Vincent Simonet, Projet Cristal, INRIA Rocquencourt           *)
+(*                                                                        *)
+(*  Copyright 2002, 2003 Institut National de Recherche en Informatique   *)
+(*  et en Automatique.  All rights reserved.  This file is distributed    *)
+(*  under the terms of the GNU Library General Public License, with the   *)
+(*  special exception on linking described in file ../LICENSE.            *)
+(*                                                                        *)
+(*  Author contact: Vincent.Simonet@inria.fr                              *)
+(*  Software page: http://cristal.inria.fr/~simonet/soft/flowcaml/        *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* $Id: complex.fmli,v 1.2 2003/06/26 13:32:52 simonet Exp $ *)
+
+(** Complex numbers.
+
+    This module provides arithmetic operations on complex numbers.
+    Complex numbers are represented by their real and imaginary parts
+    (cartesian representation).  Each part is represented by a
+    double-precision floating-point number (type [float]).   *)
+
+type 'a t = { re: 'a float; im: 'a float }
+(** The type of complex numbers.  [re] is the real part and [im] the
+    imaginary part. *)
+
+val zero: 'a t
+(** The complex number [0]. *)
+
+val one: 'a t
+(** The complex number [1]. *)
+
+val i: 'a t
+(** The complex number [i]. *)
+
+val neg: 'a t -> 'a t
+(** Unary negation. *)
+
+val conj: 'a t -> 'a t
+(** Conjugate: given the complex [x + i.y], returns [x - i.y]. *)
+
+val add: 'a t -> 'a t -> 'a t
+(** Addition *)
+
+val sub: 'a t -> 'a t -> 'a t
+(** Subtraction *)
+
+val mul: 'a t -> 'a t -> 'a t
+(** Multiplication *)
+
+val inv: 'a t -> 'a t
+(** Multiplicative inverse ([1/z]). *)
+
+val div: 'a t -> 'a t -> 'a t
+(** Division *)
+
+val sqrt: 'a t -> 'a t
+(** Square root.  The result [x + i.y] is such that [x > 0] or
+    [x = 0] and [y >= 0].
+    This function has a discontinuity along the negative real axis. *)
+
+val norm2: 'a t -> 'a float
+(** Norm squared: given [x + i.y], returns [x^2 + y^2]. *)
+
+val norm: 'a t -> 'a float
+(** Norm: given [x + i.y], returns [sqrt(x^2 + y^2)]. *)
+
+val arg: 'a t -> 'a float
+(** Argument.  The argument of a complex number is the angle
+    in the complex plane between the positive real axis and a line
+    passing through zero and the number.  This angle ranges from
+    [-pi] to [pi].  This function has a discontinuity along the
+    negative real axis. *)
+
+val polar: 'a float -> 'a float -> 'a t
+(** [polar norm arg] returns the complex having norm [norm] 
+    and argument [arg]. *)
+
+val exp: 'a t -> 'a t
+(** Exponentiation.  [exp z] returns [e] to the [z] power. *)
+
+val log: 'a t -> 'a t
+(** Natural logarithm (in base [e]). *)
+
+val pow: 'a t -> 'a t -> 'a t
+(** Power function.  [pow z1 z2] returns [z1] to the [z2] power. *)

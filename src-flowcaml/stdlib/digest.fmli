@@ -1,0 +1,34 @@
+(**************************************************************************)
+(*                                                                        *)
+(*                               Flow Caml                                *)
+(*                                                                        *)
+(*          Vincent Simonet, Projet Cristal, INRIA Rocquencourt           *)
+(*                                                                        *)
+(*  Copyright 2002, 2003 Institut National de Recherche en Informatique   *)
+(*  et en Automatique.  All rights reserved.  This file is distributed    *)
+(*  under the terms of the GNU Library General Public License, with the   *)
+(*  special exception on linking described in file ../LICENSE.            *)
+(*                                                                        *)
+(*  Author contact: Vincent.Simonet@inria.fr                              *)
+(*  Software page: http://cristal.inria.fr/~simonet/soft/flowcaml/        *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* $Id: digest.fmli,v 1.2 2003/06/26 13:32:52 simonet Exp $ *)
+
+(** MD5 message digest.
+
+   This module provides functions to compute 128-bit ``digests'' of
+   arbitrary-length strings or files. The digests are of cryptographic
+   quality: it is very hard, given a digest, to forge a string having
+   that digest. The algorithm used is MD5. 
+*)
+
+type 'a t = 'a string
+(** The type of digests: 16-character strings. *)
+
+val string : 'a string -> 'a t
+(** Return the digest of the given string. *)
+
+val to_hex : 'a t -> 'a string
+(** Return the printable hexadecimal representation of the given digest. *)

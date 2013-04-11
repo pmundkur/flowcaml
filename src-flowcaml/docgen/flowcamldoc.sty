@@ -1,0 +1,107 @@
+% $Id: flowcamldoc.sty,v 1.2 2003/05/14 15:13:44 simonet Exp $
+% flowcamldoc.sty
+
+\RequirePackage{graphicx}
+\RequirePackage{listings}
+
+
+
+% *************************************************************************
+% Document markup
+
+% Signatures
+\newcounter{fdoc@signaturedepth}
+\setcounter{fdoc@signaturedepth}{0}
+
+\newenvironment{fdoc-signature}{%
+\begin{list}{}{%
+    \addtocounter{fdoc@signaturedepth}{1}%
+    \leftmargin=\ifnum\thefdoc@signaturedepth=1 0cm\else0.75cm\fi%
+    \labelwidth=0cm%
+    \itemindent=0cm%
+    \topsep=0cm%
+    \partopsep=0cm%
+    \itemsep=-0.5em
+}%
+}
+{\end{list}\addtocounter{fdoc@signaturedepth}{-1}}
+
+\newcommand{\fdocsignatureitem}{\item}
+
+
+
+% Long modules
+\newenvironment{fdoc-longmodule}[2]{
+  \par
+  \bigskip\noindent
+  \begin{tabular}{|l|}
+    \hline
+    #1 \texttt{#2}\\
+    \hline
+  \end{tabular}
+%  \smallskip
+}{}
+
+
+
+% *************************************************************************
+% Items
+
+% Listings
+\newcommand{\btt}{}
+
+\lstdefinelanguage[Flow]{Caml}[Objective]{Caml}{%
+  morekeywords={level,content,raise,finally,reraise},%
+  deletekeywords={true,false,lsr,lsl}%
+}
+
+\lstdefinestyle{fdoc}{%
+  gobble=0,
+  columns=fullflexible,
+  language=[Flow]Caml,
+  basicstyle=\normalfont\small\tt,
+  keywordstyle=\btt
+}
+
+
+
+% Images
+\newcommand{\fdocgraphicscheme}[1]{%
+  \hspace{1cm}%
+  \includegraphics[scale=0.33]{#1.eps}%
+  \par\smallskip%
+}
+
+
+
+% Descriptions
+\newenvironment{fdoc-lmargin}[1]{%
+\begin{list}{}{%
+    \leftmargin=#1%
+    \labelwidth=0cm%
+    \itemindent=0cm%
+    \topsep=0cm%
+    \partopsep=0cm%
+    \itemsep=0cm
+}%
+\item}
+{\end{list}}
+
+\newenvironment{fdoc-description-before}
+{\begin{fdoc-lmargin}{0cm}}
+{\end{fdoc-lmargin}}
+
+\newenvironment{fdoc-description-after}
+{\begin{fdoc-lmargin}{0.75cm}\vspace{-.5em}}
+{\end{fdoc-lmargin}}
+
+\newenvironment{fdoc-comment}
+{\slshape}
+{\normalfont}
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End: 

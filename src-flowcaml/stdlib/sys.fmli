@@ -1,0 +1,56 @@
+(**************************************************************************)
+(*                                                                        *)
+(*                               Flow Caml                                *)
+(*                                                                        *)
+(*          Vincent Simonet, Projet Cristal, INRIA Rocquencourt           *)
+(*                                                                        *)
+(*  Copyright 2002, 2003 Institut National de Recherche en Informatique   *)
+(*  et en Automatique.  All rights reserved.  This file is distributed    *)
+(*  under the terms of the GNU Library General Public License, with the   *)
+(*  special exception on linking described in file ../LICENSE.            *)
+(*                                                                        *)
+(*  Author contact: Vincent.Simonet@inria.fr                              *)
+(*  Software page: http://cristal.inria.fr/~simonet/soft/flowcaml/        *)
+(*                                                                        *)
+(**************************************************************************)
+
+(** System interface. *)
+
+val argv : (!arg string, _) array
+(** The command line arguments given to the process.
+   The first element is the command name used to invoke the program.
+   The following elements are the command-line arguments
+   given to the program. *)
+
+val executable_name : !arg string
+(** The name of the file containing the executable currently running. *)
+
+val getenv : 'a string -{'b | Not_found: 'b |}-> 'c string
+             with !env, 'a < 'b
+             and  !env, 'a < 'c
+(** Return the value associated to a variable in the process
+   environment. Raise [Not_found] if the variable is unbound. *)
+
+val os_type : 'a bool
+(** Operating system currently executing the Caml program. One of
+-  ["Unix"] (for all Unix versions, including Linux and Mac OS X),
+-  ["Win32"] (for MS-Windows, OCaml compiled with MSVC++ or Mingw),
+-  ["Cygwin"] (for MS-Windows, OCaml compiled with Cygwin),
+-  ["MacOS"] (for MacOS 9). *)
+
+val word_size : 'a int
+(** Size of one word on the machine currently executing the Caml
+   program, in bits: 32 or 64. *)
+
+val max_string_length : 'a int
+(** Maximum length of a string. *)
+
+val max_array_length : 'a int
+(** Maximum length of an array. *)
+
+val ocaml_version : 'a string
+(** [ocaml_version] is the version of Objective Caml.
+
+    It is a string of the form ["major.minor[additional-info]"]
+    Where major and minor are integers, and [additional-info] is
+    a string that is empty or starts with a '+'. *)

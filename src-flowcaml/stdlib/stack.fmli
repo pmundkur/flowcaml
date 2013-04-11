@@ -1,0 +1,69 @@
+(**************************************************************************)
+(*                                                                        *)
+(*                               Flow Caml                                *)
+(*                                                                        *)
+(*          Vincent Simonet, Projet Cristal, INRIA Rocquencourt           *)
+(*                                                                        *)
+(*  Copyright 2002, 2003 Institut National de Recherche en Informatique   *)
+(*  et en Automatique.  All rights reserved.  This file is distributed    *)
+(*  under the terms of the GNU Library General Public License, with the   *)
+(*  special exception on linking described in file ../LICENSE.            *)
+(*                                                                        *)
+(*  Author contact: Vincent.Simonet@inria.fr                              *)
+(*  Software page: http://cristal.inria.fr/~simonet/soft/flowcaml/        *)
+(*                                                                        *)
+(**************************************************************************)
+
+(** Last-in first-out stacks.
+
+   This module implements stacks (LIFOs), with in-place modification. 
+*)
+
+type (='a:type, ='b:level, #'c:level) t
+(** The type of stacks containing elements of type ['a]. *)
+
+exception Empty
+(** Raised when {!Stack.pop} or {!Stack.top} is applied to an empty stack. *)
+
+
+val create : unit -> ('a, 'b, 'c) t
+(** Return a new stack, initially empty. *)
+
+val push :  'a -> ('a, 'b, 'b) t -{'b ||}-> unit
+(** [push x s] adds the element [x] at the top of stack [s]. *)
+
+val pop : ('a, 'b, 'b) t -{'c | Empty: 'd |}-> 'e
+  with 'b < level('e)
+   and 'b < 'd
+   and 'c < level('e)
+   and 'c < 'b
+   and 'c < 'd
+   and 'a < 'e
+(** [pop s] removes and returns the topmost element in stack [s],
+   or raises [Empty] if the stack is empty. *)
+
+val top : ('a, 'b, 'c) t -{'d | Empty: 'd |}-> 'e
+  with 'c < level('e)
+   and 'c < 'd
+   and 'b < level('e)
+   and 'b < 'd
+   and 'a < 'e
+(** [top s] returns the topmost element in stack [s],
+   or raises [Empty] if the stack is empty. *)
+
+val clear : ('a, 'b, 'b) t -{'b ||}-> unit
+(** Discard all elements from a stack. *)
+
+val copy : ('a, 'b, 'c) t -> ('d, 'c, 'e) t
+with 'b < 'c and 'a < 'd 
+(** Return a copy of the given stack. *)
+
+val length : ('a, 'b, 'c) t -> 'c int
+with 'b < 'c
+(** Return the number of elements in a stack. *)
+
+val iter : ('a -{'b | 'c | 'b}-> 'd) -> ('a, 'e, 'b) t -{'b | 'c |}-> unit
+with 'e < 'b and content('c) < 'b
+(** [iter f s] applies [f] in turn to all elements of [s],
+   from the element at the top of the stack to the element at the
+   bottom of the stack. The stack itself is unchanged. *)

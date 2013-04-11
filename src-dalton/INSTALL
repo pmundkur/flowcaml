@@ -1,0 +1,67 @@
+
+  	     Installing the Dalton Library on a Unix machine
+
+
+
+--------------------------------------------------------------------------
+PREREQUISITES
+
+* The Objective Caml system, version 3.06 or greater
+  (available at http://caml.inria.fr/)
+
+* GNU Make
+
+
+
+--------------------------------------------------------------------------
+INSTALLATION INSTRUCTIONS
+
+1- Go to the source directory of the library, i.e. the directory
+   src-dalton/ of the distribution:
+
+        cd src-dalton
+
+
+
+2- Configure the system.  From the source directory, do:
+
+        ./configure
+
+The "configure" script accepts the following option:
+
+-libdir=<dir>
+	Directory where the library will be installed
+	(by default, the subdirectory dalton of the ocaml library
+	directory, e.g. /usr/local/lib/ocaml/dalton)
+
+--disable-assert
+	Disable run-time assertion checks in source code
+
+
+
+2- Compile.  From the source directory, do:
+
+        make world
+
+This compiles the bytecode and native (if available) object files of
+the library.
+
+
+
+3- You can now install the library.  This will create the installation
+   directory (as specified during configuration) and copy into it
+   object and interface files of the library.  From the source
+   directory, become superuser and do:
+
+        umask 022       # make sure to give read & execute permission to all
+        make install
+
+
+
+4- Installation is complete.  You can restore the source tree to its
+   original content by
+
+       make clean
+
+   If you wish to uninstall the library, just delete the directory in
+   which you installed it.

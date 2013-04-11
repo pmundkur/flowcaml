@@ -1,0 +1,30 @@
+##########################################################################
+#                                                                        #
+#                                 Averell                                #
+#                                                                        #
+#          Vincent Simonet, Projet Cristal, INRIA Rocquencourt           #
+#                                                                        #
+#  Copyright 2002, 2003 Institut National de Recherche en Informatique   #
+#  et en Automatique.  All rights reserved.  This file is distributed    #
+#  under the terms of the GNU Library General Public License, with the   #
+#  special exception on linking described in file LICENSE.               #
+#                                                                        #
+#  Author contact: Vincent.Simonet@inria.fr                              #
+#  Software page: http://cristal.inria.fr/~simonet/soft/                 #
+#                                                                        #
+##########################################################################
+
+# $Id: Makefile.defs,v 1.5 2003/06/30 18:05:31 simonet Exp $
+
+
+
+# Compilation units of the library
+AVERELL.CU= avl_graphics avl_topo avl_tarjan avl_closure avl_kernel \
+  avl_graphviz avl_draw
+
+# Object files
+AVERELL.CMO=$(AVERELL.CU:%=%.cmo)
+AVERELL.CMX=$(AVERELL.CU:%=%.cmx)
+
+AVERELL.MLI=$(AVERELL.CU:%=%.mli)
+AVERELL.INTERFACES=$(AVERELL.CU:%=%.cmi)

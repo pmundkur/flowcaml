@@ -1,0 +1,103 @@
+##########################################################################
+#                                                                        #
+#                               Flow Caml                                #
+#                                                                        #
+#          Vincent Simonet, Projet Cristal, INRIA Rocquencourt           #
+#                                                                        #
+#  Copyright 2002, 2003 Institut National de Recherche en Informatique   #
+#  et en Automatique.  All rights reserved.  This file is distributed    #
+#  under the terms of the Q Public License version 1.0.                  #
+#                                                                        #
+#  Author contact: Vincent.Simonet@inria.fr                              #
+#  Software page: http://cristal.inria.fr/~simonet/soft/flowcaml/        #
+#                                                                        #
+##########################################################################
+
+
+
+# Directories of the source of the Flow Caml compiler
+FLOWCAMLDIRS= utils parsing stripping types typing driver toplevel \
+  tools docgen
+
+# Corresponding compilation units
+UTILS=									\
+  graphps draw \
+  config clflags compare option standard datastruct misc terminfo   \
+  lattice_solver bool_solver variance_solver tbl
+
+PARSING=					                        \
+  longident linenum location syntaxerr asttypes parsetree parser lexer  \
+  parse
+
+STRIPPING=					                        \
+  stripinfo oast gen_source gen_ast
+
+TYPES=				      		                        \
+  ident path fkind type_constructor principal level expr_context        \
+  pat_context types subst env solver value_description                  \
+  constructor_description label_description                             \
+  exception_declaration type_declaration print_types  predef
+
+TYPING=							                \
+  typedtree include_error transl_levelexpr transl_typeexpr              \
+  transl_typedecl transl_leveldecl transl_exception type_core           \
+  transl_value mtype include_mod type_mod comp_unit
+
+DRIVER= formatters errors compile
+
+TOPLEVEL= topgraph toploop topmain
+
+DOCGEN= doc_images doc_parser doc_lexer doc_comments doc_latex doc_gen doc_main
+
+
+##########################################################################
+# Files used for each program
+
+CORE.CU= \
+  $(AVERELL.CU:%=$(AVERELL.PATH)/%) \
+  $(DALTON.CU:%=$(DALTON.PATH)/%) \
+  $(UTILS:%=utils/%) \
+  $(PARSING:%=parsing/%) \
+  $(STRIPPING:%=stripping/%) \
+  $(TYPES:%=types/%) \
+  $(TYPING:%=typing/%) \
+  $(DRIVER:%=driver/%)
+
+ifdef OCAML_GRAPHICS
+CORELIBS.CMA= unix.cma graphics.cma
+CORELIBS.CMXA= unix.cmxa graphics.cmxa
+else
+CORELIBS.CMA= unix.cma
+CORELIBS.CMXA= unix.cmxa
+endif
+
+# Toplevel (flowcaml)
+FLOWCAML.CU= $(CORE.CU) $(TOPLEVEL:%=toplevel/%)
+FLOWCAML.CMO= $(FLOWCAML.CU:%=%.cmo)
+FLOWCAML.CMX= $(FLOWCAML.CU:%=%.cmx)
+
+# Batch compiler (flowcamlc)
+FLOWCAMLC.CU= $(CORE.CU) driver/main
+FLOWCAMLC.CMO= $(FLOWCAMLC.CU:%=%.cmo)
+FLOWCAMLC.CMX= $(FLOWCAMLC.CU:%=%.cmx)
+
+# Dependencies analyzer (flowcamldep)
+FLOWCAMLDEP.CU= utils/config utils/clflags utils/datastruct utils/misc \
+  utils/terminfo \
+  parsing/linenum parsing/location parsing/longident parsing/syntaxerr \
+  parsing/parser parsing/lexer parsing/parse \
+  tools/depend tools/flowcamldep
+FLOWCAMLDEP.CMO= $(FLOWCAMLDEP.CU:%=%.cmo)
+
+# Compilation units merger (flowcamlmerge)
+FLOWCAMLMERGE.CU= utils/config tools/flowcamlmerge
+FLOWCAMLMERGE.CMO= $(FLOWCAMLMERGE.CU:%=%.cmo)
+
+# Documentation generator
+FLOWCAMLDOC.CU=  $(CORE.CU) $(DOCGEN:%=docgen/%)
+FLOWCAMLDOC.CMO= $(FLOWCAMLDOC.CU:%=%.cmo)
+
+# Security policy displayer
+FLOWCAMLPOL.CU=  $(AVERELL.CU:%=$(AVERELL.PATH)/%) \
+                 utils/config utils/datastruct types/principal tools/flowcamlpol
+FLOWCAMLPOL.CMO= $(FLOWCAMLPOL.CU:%=%.cmo)

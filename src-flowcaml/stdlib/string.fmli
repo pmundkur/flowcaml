@@ -1,0 +1,126 @@
+(**************************************************************************)
+(*                                                                        *)
+(*                               Flow Caml                                *)
+(*                                                                        *)
+(*          Vincent Simonet, Projet Cristal, INRIA Rocquencourt           *)
+(*                                                                        *)
+(*  Copyright 2002, 2003 Institut National de Recherche en Informatique   *)
+(*  et en Automatique.  All rights reserved.  This file is distributed    *)
+(*  under the terms of the GNU Library General Public License, with the   *)
+(*  special exception on linking described in file ../LICENSE.            *)
+(*                                                                        *)
+(*  Author contact: Vincent.Simonet@inria.fr                              *)
+(*  Software page: http://cristal.inria.fr/~simonet/soft/flowcaml/        *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* $Id: string.fmli,v 1.8 2003/06/26 13:32:53 simonet Exp $ *)
+
+
+(** String operations. *)
+
+external length : 'a string -> 'a int = "%string_length"
+(** Return the length (number of characters) of the given string. *)
+
+external get : 'a string -> 'a int -> 'a char
+             = "%string_safe_get"
+(** [String.get s n] returns character number [n] in string [s].
+   The first character is character number 0.
+   The last character is character number [String.length s - 1].
+   {b Terminate the program} if [n] is outside the range
+   0 to [(String.length s - 1)].
+   You can also write [s.[n]] instead of [String.get s n]. *)
+
+val make : 'a int -> 'a char -> 'a string
+(** [String.make n c] returns a fresh string of length [n],
+   filled with the character [c].
+   {b Terminate the program} if [n < 0] or [n > ]{!Sys.max_string_length}.*)
+
+val sub : 'a string -> 'a int -> 'a int-> 'a string
+(** [String.sub s start len] returns a fresh string of length [len],
+   containing the characters number [start] to [start + len - 1]
+   of string [s].
+
+   {b Terminate the program} if [start] and [len] do not
+   designate a valid substring of [s]; that is, if [start < 0],
+   or [len < 0], or [start + len > ]{!String.length}[ s]. *)
+
+val concat : 'a string -> ('a string, 'a) list -> 'a string
+(** [String.concat sep sl] concatenates the list of strings [sl],
+   inserting the separator string [sep] between each. *)
+
+val iter : ('a char -{'b | 'c | 'b}-> 'd) -> 'a string -{'b | 'c |}-> unit
+           with content('c), 'a < 'b
+(** [String.iter f s] applies function [f] in turn to all
+   the characters of [s].  It is equivalent to
+   [f s.(0); f s.(1); ...; f s.(String.length s - 1); ()]. *)
+
+val escaped : 'a string -> 'a string
+(** Return a copy of the argument, with special characters
+   represented by escape sequences, following the lexical
+   conventions of Objective Caml.  If there is no special
+   character in the argument, return the original string itself,
+   not a copy. *)
+
+val index : 'a string -> 'a char -{'b | Not_found: 'b |}-> 'a int
+            with 'a < 'b
+(** [String.index s c] returns the position of the leftmost
+   occurrence of character [c] in string [s].
+   Raise [Not_found] if [c] does not occur in [s]. *)
+
+val rindex : 'a string -> 'a char -{'b | Not_found: 'b |}-> 'a int
+             with 'a < 'b
+(** [String.rindex s c] returns the position of the rightmost
+   occurrence of character [c] in string [s].
+   Raise [Not_found] if [c] does not occur in [s]. *)
+
+val index_from : 'a string -> 'a char -{'b | Not_found: 'b |}-> 'a int
+                 with 'a < 'b
+(** Same as {!String.index}, but start
+   searching at the character position given as second argument.
+   [String.index s c] is equivalent to [String.index_from s 0 c].*)
+
+val rindex_from : 'a string -> 'a char -{'b | Not_found: 'b |}-> 'a int
+                  with 'a < 'b
+(** Same as {!String.rindex}, but start
+   searching at the character position given as second argument.
+
+   [String.rindex s c] is equivalent to
+   [String.rindex_from s (String.length s - 1) c]. *)
+
+val contains : 'a string -> 'a char -> 'a bool
+(** [String.contains s c] tests if character [c]
+   appears in the string [s]. *)
+
+val contains_from : 'a string -> 'a char -> 'a int -> 'a bool
+(** [String.contains_from s start c] tests if character [c]
+   appears in the substring of [s] starting from [start] to the end
+   of [s].
+   {b Terminate the program} if [start] is not a valid index of [s]. *)
+
+val rcontains_from : 'a string -> 'a char -> 'a int -> 'a bool
+(** [String.rcontains_from s stop c] tests if character [c]
+   appears in the substring of [s] starting from the beginning
+   of [s] to index [stop].
+   {b Terminate the program} if [stop] is not a valid index of [s]. *)
+
+val uppercase : 'a string -> 'a string
+(** Return a copy of the argument, with all lowercase letters
+   translated to uppercase, including accented letters of the ISO
+   Latin-1 (8859-1) character set. *)
+
+val lowercase : 'a string -> 'a string
+(** Return a copy of the argument, with all uppercase letters
+   translated to lowercase, including accented letters of the ISO
+   Latin-1 (8859-1) character set. *)
+
+val capitalize : 'a string -> 'a string
+(** Return a copy of the argument, with the first letter set to uppercase. *)
+
+val uncapitalize : 'a string -> 'a string
+(** Return a copy of the argument, with the first letter set to lowercase. *)
+
+(**/**)
+
+external unsafe_get : 'a string -> 'a int -> 'a char
+                    = "%string_unsafe_get"

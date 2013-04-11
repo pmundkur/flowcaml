@@ -1,0 +1,39 @@
+(**************************************************************************)
+(*                                                                        *)
+(*                               Flow Caml                                *)
+(*                                                                        *)
+(*          Vincent Simonet, Projet Cristal, INRIA Rocquencourt           *)
+(*                                                                        *)
+(*  Copyright 2002, 2003 Institut National de Recherche en Informatique   *)
+(*  et en Automatique.  All rights reserved.  This file is distributed    *)
+(*  under the terms of the GNU Library General Public License, with the   *)
+(*  special exception on linking described in file ../LICENSE.            *)
+(*                                                                        *)
+(*  Author contact: Vincent.Simonet@inria.fr                              *)
+(*  Software page: http://cristal.inria.fr/~simonet/soft/flowcaml/        *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* $Id: fmarshal.fmli,v 1.3 2003/06/26 13:32:52 simonet Exp $ *)
+
+(** Marshaling of data structures.
+
+   This module provides functions to encode arbitrary data structures
+   as sequences of bytes, which can then be written on a file or
+   sent over a pipe or network connection.  The bytes can then
+   be read back later, possibly in another process, and decoded back
+   into a data structure. The format for the byte sequences
+   is compatible across all machines for a given version of Objective Caml.
+*)
+
+val to_string : 'a -> 'b string
+                with content('a) < 'b
+(** [Fmarshal.to_string v flags] returns a string containing
+   the representation of [v] as a sequence of bytes. *)
+
+val from_string : 'a string -> 'b
+                  with 'a < level('b)
+(** [Fmarshal.from_string buff ofs] unmarshals a structured value
+    stored in [stg]. *)
+
+

@@ -1,0 +1,150 @@
+
+/*************************************************************************
+  Title
+*/
+
+.title {
+   font-family: sans-serif;
+   font-size: x-large;
+   font-weight: bold;
+   text-align: center;
+   color: #cc0066;
+   border: solid #cc0066;
+   border-width: 2pt;
+   background-color: #d0d0d0;
+   padding: 0.7em;
+   margin: 1em 6em 2em;
+}
+
+.undertitle {
+   font-size: medium;
+   color: #1166dd
+}
+
+
+
+
+/*************************************************************************
+  Sections
+*/
+
+H1 {
+   font-family: sans-serif;
+   font-size: x-large;
+   color: #cc0066;
+   border: solid #cc0066;
+   border-width: thin;
+   background-color: #d0d0d0;
+   padding: 0.7em;
+   margin: 3em 6em 2em;
+}
+
+H2 {
+   font-family: sans-serif;
+   font-size: x-large;
+   color: #cc0066;
+   border: solid #cc0066;
+   border-width: thin 5pt;
+   padding-left: 0.7em;
+   margin: 1em 0em;
+}
+
+H3 {
+   font-family: sans-serif;
+   font-size: large;
+   color: #1166dd;
+   border: solid #1166dd;
+   border-width: thin 5pt;
+   padding-left: 0.7em;
+   margin: 1em 0em;
+}
+
+H4 {
+   font-family: sans-serif;
+   font-size: large;
+   color: #1166dd;
+   margin: 1em 0em;
+}
+
+
+
+/*************************************************************************
+  Links                                                                 
+*/
+
+A:link 
+  {
+    color: #1166dd;
+    background-color: transparent;
+    text-decoration: none;
+  }
+
+A:visited
+  {
+    color: #1166dd;
+    background-color: transparent;
+    text-decoration: none;
+  }
+
+A:active 
+  {
+    color: #00fa00; 
+    background-color: transparent;
+    text-decoration: none;
+  }
+
+A:hover
+  {
+    color: #1166dd; 
+    background-color: transparent;
+    text-decoration: underline;
+  }
+  
+
+
+/*************************************************************************
+  Flow Caml stuff
+*/
+
+.fdoc-longmoduletitle {
+    background-color: #d0d0d0;
+    color: #1166dd;
+    font-size: medium;
+    font-weight: bold;
+    margin: 1em 0em;
+}
+
+.fdoc-description-before {
+    margin-top: 2em;
+    margin-bottom: 1em;
+    margin-left: 0em;
+}	     
+
+.fdoc-description-after {
+    margin-top: 0.5em;
+    margin-bottom: 2em;
+    margin-left: 4em;
+}	     
+
+.fdoc-graphicscheme {
+    margin-top: 0.5em;
+    margin-bottom: 1em;
+    margin-left: 4em;
+}	     
+
+
+
+/*************************************************************************
+  Misc
+*/
+
+table.sourcecode {
+   background-color: #d0d0d0;
+   margin: 0em 2em;
+   padding-left: 0.5em;
+   padding-right: 0.5em;
+}
+
+.outcode {
+   color: #1166dd;
+}

@@ -1,0 +1,109 @@
+(**************************************************************************)
+(*                                                                        *)
+(*                               Flow Caml                                *)
+(*                                                                        *)
+(*          Vincent Simonet, Projet Cristal, INRIA Rocquencourt           *)
+(*                                                                        *)
+(*  Copyright 2002, 2003 Institut National de Recherche en Informatique   *)
+(*  et en Automatique.  All rights reserved.  This file is distributed    *)
+(*  under the terms of the GNU Library General Public License, with the   *)
+(*  special exception on linking described in file ../LICENSE.            *)
+(*                                                                        *)
+(*  Author contact: Vincent.Simonet@inria.fr                              *)
+(*  Software page: http://cristal.inria.fr/~simonet/soft/flowcaml/        *)
+(*                                                                        *)
+(**************************************************************************)
+
+module type OrderedType = 
+  sig
+    type (#'a:level) t
+      (** The type of the map keys. *)
+    val compare : 'a t -> 'a t -> 'a int
+      (** A total ordering function over the keys.
+          This is a two-argument function [f] such that
+          [f e1 e2] is zero if the keys [e1] and [e2] are equal,
+          [f e1 e2] is strictly negative if [e1] is smaller than [e2],
+          and [f e1 e2] is strictly positive if [e1] is greater than [e2].
+          Example: a suitable ordering function is
+          the generic structural comparison function {!Pervasives.compare}. *)
+  end
+(** Input signature of the functor {!Map.Make}. *)
+
+module type S =
+  sig
+    type (#'a:level) key
+    (** The type of the map keys. *)
+
+    type (+'a:type, #'b:level) t
+    (** The type of maps from type [key] to type ['a]. *)
+
+    val empty : ('a, 'b) t
+    (** The empty map. *)
+
+    val add : 'a key -> 'b -> ('b, 'a) t -> ('b, 'a) t
+    (** [add x y m] returns a map containing the same bindings as
+       [m], plus a binding of [x] to [y]. If [x] was already bound
+       in [m], its previous binding disappears. *)
+
+    val find : 'a key -> ('b, 'a) t -{'c | Not_found: 'c |}-> 'b
+               with 'a < 'c, level('b)
+    (** [find x m] returns the current binding of [x] in [m],
+       or raises [Not_found] if no such binding exists. *)
+
+    val remove : 'a key -> ('b, 'a) t -> ('b, 'a) t
+    (** [remove x m] returns a map containing the same bindings as
+       [m], except for [x] which is unbound in the returned map. *)
+
+    val mem : 'a key -> ('b, 'a) t -> 'a bool
+    (** [mem x m] returns [true] if [m] contains a binding for [x],
+       and [false] otherwise. *)
+
+    val iter : ('a key -{'b | 'c | 'g}-> 'd -{'e | 'c | 'e}-> 'f) ->
+               ('d, 'a) t -{'g | 'c |}-> unit
+               with 'a, 'g, content('c) < 'b, 'e
+    (** [iter f m] applies [f] to all bindings in map [m].
+       [f] receives the key as first argument, and the associated value
+       as second argument. The order in which the bindings are passed to
+       [f] is unspecified. Only current bindings are presented to [f]:
+       bindings hidden by more recent bindings are not passed to [f]. *)
+
+    val map : ('a -{'b | 'c | 'e}-> 'd) ->
+              ('a, 'f) t -{'b | 'c |}-> ('d, 'f) t
+              with 'e < level('d)
+              and  'e, content('c), 'f < 'b
+    (** [map f m] returns a map with same domain as [m], where the
+       associated value [a] of all bindings of [m] has been
+       replaced by the result of the application of [f] to [a].
+       The order in which the associated values are passed to [f]
+       is unspecified. *)
+
+    val mapi : ('a key -{'b | 'c | 'i}-> 'd -{'e | 'f | 'h}-> 'g) ->
+               ('d, 'a) t -{'j | 'f |}-> ('g, 'a) t
+               with 'i, 'h < level('g)
+               and  'c < 'f
+               and  'a, content('f), content('c), 'j, 'i < 'b
+               and  'a, content('f), content('c), 'j, 'i, 'h < 'e
+    (** Same as {!Map.S.map}, but the function receives as arguments both the
+       key and the associated value for each binding of the map. *)
+
+    val fold : ('a key -{'b | 'c | 'k}->
+                'd -{'e | 'c | 'j}-> 'f -{'g | 'c | 'i}-> 'h) ->
+               ('d, 'a) t -> 'h -{'l | 'c |}-> 'h
+               with 'h < 'f
+               and  'a, 'k, 'j, 'i < level('f), level('h)
+               and  'a, 'k, 'l, 'j, 'i, content('c) < 'g
+               and  'a, 'k, 'l, 'j, content('c) < 'e
+               and  'a, 'k, 'l, content('c) < 'b
+    (** [fold f m a] computes [(f kN dN ... (f k1 d1 a)...)],
+       where [k1 ... kN] are the keys of all bindings in [m],
+       and [d1 ... dN] are the associated data.
+       The order in which the bindings are presented to [f] is
+       unspecified. *)
+
+  end
+(** Output signature of the functor {!Map.Make}. *)
+
+module Make (Ord : OrderedType) : S with type 'a key = 'a Ord.t
+(** Functor building an implementation of the map structure
+   given a totally ordered type. *)
+

@@ -1,0 +1,92 @@
+
+  		  Installing Flow Caml on a Unix machine
+
+
+
+--------------------------------------------------------------------------
+PREREQUISITES
+
+* The Objective Caml system, version 3.08 or greater
+  (available at http://caml.inria.fr/)
+
+* GNU Make
+
+* A minor feature of Flow Caml requires the GraphViz tools to be
+  installed.  They can be download at the following adresses:
+
+      http://www.graphviz.org/
+      http://www.research.att.com/sw/tools/graphviz/
+
+  However, the configure script automatically detects their presence,
+  and the system should run properly even if they are not found.
+
+
+
+--------------------------------------------------------------------------
+INSTALLATION INSTRUCTIONS
+
+1- Go to the source directory of the system, i.e. the directory
+   src-flowcaml/ of the distribution:
+
+        cd src-flowcaml
+
+
+
+2- Configure the system.  From the source directory, do:
+
+        ./configure
+
+The "configure" script accepts the following option:
+
+-bindir=<dir>
+	Directory where the binaries will be installed
+	(by default, /usr/local/bin)
+
+-libdir=<dir>
+	Directory where the standard library will be installed
+	(by default, /usr/local/lib/flowcaml)
+
+-prefix=<dir>
+        Set bindir and libdir to <dir>/bin and <dir>/lib/flowcaml
+
+-with-runlib=<dir>
+	Directory where the runtime library will be installed
+	(by default, {ocaml-libdir}/flowcamlrun
+
+--disable-assert
+	Disable run-time assertion checks in source code
+
+
+
+2- Compile.  From the source directory, do:
+
+        make world
+
+This first builds the Flow Caml interactive toplevel and batch
+compilers.  Then it uses the latter to build the Flow Caml standard library
+
+
+
+3- You can now install the system.  This will create the following
+commands (in the binary directory selected during autoconfiguration):
+
+	 flowcaml	the interactive toplevel
+	 flowcamlc	the batch compiler
+	 flowcamldep	the dependencies generator
+	 flowcamlmerge	the compilation units merger
+
+From the source directory, become superuser and do:
+
+        umask 022       # make sure to give read & execute permission to all
+        make install
+
+
+
+4- Installation is complete.  You can restore the source tree to its
+   original content by
+
+       make clean
+
+   If you wish to uninstall Flow Caml from your system, you can do
+
+       make uninstall

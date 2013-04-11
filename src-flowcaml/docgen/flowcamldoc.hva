@@ -1,0 +1,86 @@
+
+\usepackage{listings}
+
+\let\flowcamldoc@meta=\@meta
+\def\@meta{%
+  \flowcamldoc@meta
+  \begin{rawhtml}
+<link media="screen" type="text/css" href="flowcamldoc.css" rel="StyleSheet"/> 
+  \end{rawhtml}
+}
+
+
+% *************************************************************************
+% Document markup
+
+% Signatures
+\newcounter{fdoc@signaturedepth}
+\setcounter{fdoc@signaturedepth}{0}
+
+\newenvironment{fdoc-signature}{%
+  \@open{div}{style="margin-left: \thefdoc@signaturedepth em;"}
+  \addtocounter{fdoc@signaturedepth}{2}%
+}%
+{%
+  \addtocounter{fdoc@signaturedepth}{-2}%
+  \@close{div}
+}
+
+\newcommand{\fdocsignatureitem}{}
+
+
+
+% Long modules
+\newenvironment{fdoc-longmodule}[2]{
+  \@open{div}{class="fdoc-longmoduletitle"}%
+  #1 \texttt{#2}%
+  \@close{div}%
+}
+{}
+
+
+
+% *************************************************************************
+% Items
+
+% Listings
+\newcommand{\btt}{\bf\tt}
+
+\lstdefinelanguage[Flow]{Caml}[Objective]{Caml}{%
+  morekeywords={level,content,raise,finally,reraise},%
+  deletekeywords={true,false,lsr,lsl}%
+}
+
+\lstdefinestyle{fdoc}{%
+  gobble=0,
+  language=[Flow]Caml,
+  basicstyle=\normalfont\small\@fontcolor{\#1166dd}\tt,
+  keywordstyle=\btt
+}
+
+
+
+% Images
+\newcommand{\fdocgraphicscheme}[1]{%
+  \@open{div}{class="fdoc-graphicscheme"}
+  \imgsrc{#1.png}
+  \@close{div}
+}
+
+
+
+% Descriptions
+
+\newenvironment{fdoc-description-before}
+{\@open{div}{class="fdoc-description-before"}}
+{\@close{div}}
+
+\newenvironment{fdoc-description-after}
+{\@open{div}{class="fdoc-description-after"}}
+{\@close{div}}
+
+\newenvironment{fdoc-comment}
+{\@open{div}{class="fdoc-comment"}}
+{\@close{div}}
+
+

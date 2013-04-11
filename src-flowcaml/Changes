@@ -1,0 +1,32 @@
+Flow Caml 1.06
+--------------
+
+* Fixed bug in typing of let pat = ... in ...
+  when pat is a sum pattern.
+
+Flow Caml 1.05
+--------------
+
+* Fixed bug in parsing of arrow types
+
+Flow Caml 1.04
+--------------
+
+* Fixed bug in typing of or-patterns
+
+Flow Caml 1.03
+--------------
+
+* Fixed minor incompatibilities with Objective Caml release 3.08
+
+Flow Caml 1.01
+--------------
+
+* Fixed minor incompatibilities with the new Objective Caml release (3.07)
+
+
+
+Flow Caml 1.00
+--------------
+
+First public release.

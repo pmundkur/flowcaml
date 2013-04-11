@@ -1,0 +1,161 @@
+
+(* $Id: avl_graphics.mlp,v 1.1 2003/06/30 18:05:32 simonet Exp $ *)
+
+#ifdef GRAPHICS
+
+include Graphics
+
+#else
+
+let not_implemented _ fname =
+  Printf.eprintf
+    "The graphics library is not available on your system (%s).\n"
+    fname;
+  flush stderr;
+  exit 2
+
+exception Graphic_failure of string
+
+let open_graph x = not_implemented x "open_graph"
+
+let close_graph () = ()
+
+let set_window_title x = not_implemented x "set_window_title"
+
+let clear_graph x = not_implemented x "clear_graph"
+
+let size_x x = not_implemented x "size_x"
+
+let size_y x = not_implemented x "size_y"
+
+type color = int
+
+let rgb _ _ _ = 0
+
+let set_color x = not_implemented x "set_color"
+
+let background = 0
+
+let foreground = 0
+
+let black = 0
+let white = 0
+let red = 0
+let green = 0
+let blue = 0
+let yellow = 0
+let cyan = 0
+let magenta = 0
+
+
+let plot x = not_implemented x "plot"
+
+let plots x = not_implemented x "plots"
+
+let point_color x = not_implemented x "point_color"
+
+let moveto x = not_implemented x "moveto"
+
+let rmoveto x = not_implemented x "rmoveto"
+
+let current_x x = not_implemented x "current_x"
+
+let current_y x = not_implemented x "current_y"
+
+let current_point x = not_implemented x "current_point"
+
+let lineto x = not_implemented x "lineto"
+
+let rlineto x = not_implemented x "rlineto"
+
+let curveto x = not_implemented x "curveto"
+
+let draw_rect x = not_implemented x "draw_rect"
+
+let draw_poly_line x = not_implemented x "draw_poly_line"
+
+let draw_poly x = not_implemented x "draw_poly"
+
+let draw_segments x = not_implemented x "draw_segments"
+
+let draw_arc x = not_implemented x "draw_arc"
+
+let draw_ellipse x = not_implemented x "draw_ellipse"
+
+let draw_circle x = not_implemented x "draw_circle"
+
+let set_line_width x = not_implemented x "set_line_width"
+
+let draw_char x = not_implemented x "draw_char" 
+
+let draw_string x = not_implemented x "draw_string" 
+
+let set_font x = not_implemented x "set_font" 
+
+let set_text_size x = not_implemented x "set_text_size"
+
+let text_size x = not_implemented x "text_size" 
+
+let fill_rect x = not_implemented x "fill_rect"
+
+let fill_poly x = not_implemented x "fill_poly" 
+
+let fill_arc x = not_implemented x "fill_arc"
+
+let fill_ellipse x = not_implemented x "fill_ellipse" 
+
+let fill_circle x = not_implemented x "fill_circle" 
+
+type image
+
+let transp = 0
+
+let make_image x = not_implemented x "make_image"
+
+let dump_image x = not_implemented x "dump_image" 
+
+let draw_image x = not_implemented x "draw_image" 
+
+let get_image x = not_implemented x "get_image" 
+
+let create_image x = not_implemented x "create_image" 
+
+let blit_image x = not_implemented x "blit_image" 
+
+type status =
+  { mouse_x : int;
+    mouse_y : int;
+    button : bool;
+    keypressed : bool;
+    key : char;
+  }
+
+type event =
+    Button_down
+  | Button_up
+  | Key_pressed
+  | Mouse_motion
+  | Poll
+
+
+let wait_next_event x = not_implemented x "wait_next_event" 
+
+let mouse_pos x = not_implemented x "mouse_pos" 
+
+let button_down x = not_implemented x "button_down" 
+
+let read_key x = not_implemented x "read_key" 
+
+let key_pressed x = not_implemented x "key_pressed" 
+
+let sound x = not_implemented x "sound" 
+
+let auto_synchronize x = not_implemented x "auto_synchronize" 
+
+let synchronize x = not_implemented x "synchronize" 
+
+let display_mode x = not_implemented x "display_mode" 
+
+let remember_mode x = not_implemented x "remember_mode" 
+
+#endif

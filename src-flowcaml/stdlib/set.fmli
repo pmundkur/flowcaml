@@ -1,0 +1,77 @@
+(**************************************************************************)
+(*                                                                        *)
+(*                               Flow Caml                                *)
+(*                                                                        *)
+(*          Vincent Simonet, Projet Cristal, INRIA Rocquencourt           *)
+(*                                                                        *)
+(*  Copyright 2002, 2003 Institut National de Recherche en Informatique   *)
+(*  et en Automatique.  All rights reserved.  This file is distributed    *)
+(*  under the terms of the GNU Library General Public License, with the   *)
+(*  special exception on linking described in file ../LICENSE.            *)
+(*                                                                        *)
+(*  Author contact: Vincent.Simonet@inria.fr                              *)
+(*  Software page: http://cristal.inria.fr/~simonet/soft/flowcaml/        *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* $Id: set.fmli,v 1.4 2003/06/26 13:32:53 simonet Exp $ *)
+
+module type OrderedType =
+  sig
+    type (#'a:level) t
+    val compare: 'a t -> 'a t -> 'a int
+  end
+
+module type S =
+  sig
+    type (#'a:level) elt
+    type (#'a:level) t
+    val empty: _ t
+    val is_empty: 'a t -> 'a bool
+    val mem: 'a elt -> 'a t -> 'a bool
+    val add: 'a elt -> 'a t -> 'a t
+    val singleton: 'a elt -> 'a t
+    val remove: 'a elt -> 'a t -> 'a t
+    val union_: 'a t -> 'a t -> 'a t
+    val inter_: 'a t -> 'a t -> 'a t
+    val diff: 'a t -> 'a t -> 'a t
+    val compare: 'a t -> 'a t -> 'a int
+    val equal: 'a t -> 'a t -> 'a bool
+    val subset: 'a t -> 'a t -> 'a bool
+	(* TEMPORARY revoir le type de iter *)
+    val iter: ('a elt -{'b | 'c | 'b}-> 'd) -> 'a t -{'b | 'c |}-> unit
+              with 'a, content('c) < 'b
+    val fold: ('a elt -{'b | 'c | 'h}-> 'd -{'e | 'c | 'g}-> 'f) ->
+              'a t -> 'f -{'i | 'c |}-> 'f
+              with 'f < 'd
+              and  'a, 'g, 'h < level('d), level('f)
+              and  'a, 'h, 'i, 'g, content('c) < 'e
+              and  'a, 'h, 'i, content('c) < 'b
+    val for_all: ('a elt -{'b | 'c | 'e}-> 'd bool) ->
+                 'a t -{'b | 'c |}-> 'd bool
+                 with 'a, 'e, content('c) < 'b
+                 and  'a, 'e < 'd
+    val exists: ('a elt -{'b | 'c | 'e}-> 'd bool) ->
+                'a t -{'b | 'c |}-> 'd bool
+                with 'a, 'e, content('c) < 'b
+                and  'a, 'e < 'd
+    val filter: ('a elt -{'b | 'c | 'e}-> 'd bool) ->
+                'a t -{'b | 'c |}-> 'd t
+                with 'a, 'e < 'd
+                and  'a, content('c), 'e < 'b
+    val partition: ('a elt -{'b | 'c | 'e}-> 'd bool) ->
+                   'a t -{'b | 'c |}-> 'd t * 'd t
+                   with 'a, 'e, content('c) < 'b
+                   and  'a, 'e < 'd
+    val cardinal: 'a t -> 'a int
+    val elements: 'a t -> ('a elt, 'a) list
+    val min_elt: 'a t -{'b | Not_found: 'b |}-> 'a elt
+                  with 'a < 'b
+    val max_elt: 'a t -{'b | Not_found: 'b |}-> 'a elt
+                  with 'a < 'b
+    val choose: 'a t -{'b | Not_found: 'b |}-> 'a elt
+                 with 'a < 'b
+
+  end
+
+module Make(Ord: OrderedType) : S with type 'a elt = 'a Ord.t

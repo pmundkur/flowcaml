@@ -1,0 +1,190 @@
+(**************************************************************************)
+(*                                                                        *)
+(*                               Flow Caml                                *)
+(*                                                                        *)
+(*          Vincent Simonet, Projet Cristal, INRIA Rocquencourt           *)
+(*                                                                        *)
+(*  Copyright 2002, 2003 Institut National de Recherche en Informatique   *)
+(*  et en Automatique.  All rights reserved.  This file is distributed    *)
+(*  under the terms of the GNU Library General Public License, with the   *)
+(*  special exception on linking described in file ../LICENSE.            *)
+(*                                                                        *)
+(*  Author contact: Vincent.Simonet@inria.fr                              *)
+(*  Software page: http://cristal.inria.fr/~simonet/soft/flowcaml/        *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* NOTABENE : 
+   Remplacé les [invalid_arg "Map.bal"] par des [assert false]
+*)
+
+module type OrderedType =
+  sig
+    type (#'a:level) t
+    val compare: 'a t -> 'a t -> 'a int
+  end
+
+
+module type S =
+  sig
+    type (#'a:level) key
+    type (+'a:type, #'b:level) t
+
+    val empty : ('a, 'b) t
+
+    val add : 'a key -> 'b -> ('b, 'a) t -> ('b, 'a) t
+
+    val find : 'a key -> ('b, 'a) t -{'c | Not_found: 'c |}-> 'b
+               with 'a < 'c, level('b)
+
+    val remove : 'a key -> ('b, 'a) t -> ('b, 'a) t
+
+    val mem : 'a key -> ('b, 'a) t -> 'a bool
+
+    val iter : ('a key -{'b | 'c | 'g}-> 'd -{'e | 'c | 'e}-> 'f) ->
+               ('d, 'a) t -{'g | 'c |}-> unit
+               with 'a, 'g, content('c) < 'b, 'e
+
+    val map : ('a -{'b | 'c | 'e}-> 'd) ->
+              ('a, 'f) t -{'b | 'c |}-> ('d, 'f) t
+              with 'e < level('d)
+              and  'e, content('c), 'f < 'b
+
+    val mapi : ('a key -{'b | 'c | 'i}-> 'd -{'e | 'f | 'h}-> 'g) ->
+               ('d, 'a) t -{'j | 'f |}-> ('g, 'a) t
+               with 'i, 'h < level('g)
+               and  'c < 'f
+               and  'a, content('f), content('c), 'j, 'i < 'b
+               and  'a, content('f), content('c), 'j, 'i, 'h < 'e
+
+    val fold : ('a key -{'b | 'c | 'k}->
+                'd -{'e | 'c | 'j}-> 'f -{'g | 'c | 'i}-> 'h) ->
+               ('d, 'a) t -> 'h -{'l | 'c |}-> 'h
+               with 'h < 'f
+               and  'a, 'k, 'j, 'i < level('f), level('h)
+               and  'a, 'k, 'l, 'j, 'i, content('c) < 'g
+               and  'a, 'k, 'l, 'j, content('c) < 'e
+               and  'a, 'k, 'l, content('c) < 'b
+  end
+
+
+module Make(Ord: OrderedType) = struct
+
+    type 'a key = 'a Ord.t
+
+    type ('a, 'b) t =
+        Empty
+      | Node of ('a, 'b) t * 'b key * 'a * ('a, 'b) t * 'b int
+      # 'b
+
+    let empty = Empty
+
+    let height = function
+        Empty -> 0
+      | Node(_,_,_,_,h) -> h
+
+    let create l x d r =
+      let hl = height l and hr = height r in
+      Node(l, x, d, r, (if hl >= hr then hl + 1 else hr + 1))
+
+    let bal l x d r =
+      let hl = match l with Empty -> 0 | Node(_,_,_,_,h) -> h in
+      let hr = match r with Empty -> 0 | Node(_,_,_,_,h) -> h in
+      if hl > hr + 2 then begin
+        match l with
+          Empty -> assert false
+        | Node(ll, lv, ld, lr, _) ->
+            if height ll >= height lr then
+              create ll lv ld (create lr x d r)
+            else begin
+              match lr with
+                Empty -> assert false
+              | Node(lrl, lrv, lrd, lrr, _)->
+                  create (create ll lv ld lrl) lrv lrd (create lrr x d r)
+            end
+      end else if hr > hl + 2 then begin
+        match r with
+          Empty -> assert false
+        | Node(rl, rv, rd, rr, _) ->
+            if height rr >= height rl then
+              create (create l x d rl) rv rd rr
+            else begin
+              match rl with
+                Empty -> assert false
+              | Node(rll, rlv, rld, rlr, _) ->
+                  create (create l x d rll) rlv rld (create rlr rv rd rr)
+            end
+      end else
+        Node(l, x, d, r, (if hl >= hr then hl + 1 else hr + 1))
+
+    let rec add x data = function
+        Empty ->
+          Node(Empty, x, data, Empty, 1)
+      | Node(l, v, d, r, h) as t ->
+          let c = Ord.compare x v in
+          if c = 0 then
+            Node(l, x, data, r, h)
+          else if c < 0 then
+            bal (add x data l) v d r
+          else
+            bal l v d (add x data r)
+
+    let rec find x = function
+        Empty ->
+          raise Not_found
+      | Node(l, v, d, r, _) ->
+          let c = Ord.compare x v in
+          if c = 0 then d
+          else find x (if c < 0 then l else r)
+
+    let rec mem x = function
+        Empty ->
+          false
+      | Node(l, v, d, r, _) ->
+          let c = Ord.compare x v in
+          c = 0 || mem x (if c < 0 then l else r)
+
+    let rec merge t1 t2 =
+      match (t1, t2) with
+        (Empty, t) -> t
+      | (t, Empty) -> t
+      | (Node(l1, v1, d1, r1, h1), Node(l2, v2, d2, r2, h2)) ->
+          bal l1 v1 d1 (bal (merge r1 l2) v2 d2 r2)
+
+    let rec remove x = function
+        Empty ->
+          Empty
+      | Node(l, v, d, r, h) as t ->
+          let c = Ord.compare x v in
+          if c = 0 then
+            merge l r
+          else if c < 0 then
+            bal (remove x l) v d r
+          else
+            bal l v d (remove x r)
+
+    let rec iter f t =
+      let rec iter_rec = function
+          Empty -> ()
+	| Node(l, v, d, r, _) ->
+            iter f l; f v d; iter f r
+      in
+      iter_rec t;
+      ()
+
+    let rec map f = function
+        Empty               -> Empty
+      | Node(l, v, d, r, h) -> Node(map f l, v, f d, map f r, h)
+
+    let rec mapi f = function
+        Empty               -> Empty
+      | Node(l, v, d, r, h) -> Node(mapi f l, v, f v d, mapi f r, h)
+
+    let rec fold f m accu =
+      match m with
+        Empty -> accu
+      | Node(l, v, d, r, _) ->
+          fold f l (f v d (fold f r accu))
+
+end
+

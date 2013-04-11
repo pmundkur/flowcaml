@@ -1,0 +1,603 @@
+(**************************************************************************)
+(*                                                                        *)
+(*                               Flow Caml                                *)
+(*                                                                        *)
+(*          Vincent Simonet, Projet Cristal, INRIA Rocquencourt           *)
+(*                                                                        *)
+(*  Copyright 2002, 2003 Institut National de Recherche en Informatique   *)
+(*  et en Automatique.  All rights reserved.  This file is distributed    *)
+(*  under the terms of the GNU Library General Public License, with the   *)
+(*  special exception on linking described in file ../LICENSE.            *)
+(*                                                                        *)
+(*  Author contact: Vincent.Simonet@inria.fr                              *)
+(*  Software page: http://cristal.inria.fr/~simonet/soft/flowcaml/        *)
+(*                                                                        *)
+(**************************************************************************)
+
+(** The initially opened module.
+
+   This module provides the built-in types (numbers, booleans,
+   strings, exceptions, references, lists, arrays, input-output channels, ...)
+   and the basic operations over these types.
+
+   This module is automatically opened at the beginning of each compilation.
+   All components of this module can therefore be referred by their short
+   name, without prefixing them by [Pervasives].
+*)
+
+exception Exit
+(** The [Exit] exception is not raised by any library function.  It is
+    provided for use in your programs.*)
+
+val invalid_arg : 'a string -{'a | Invalid_argument: 'a | }-> 'b
+(** Raise exception [Invalid_argument] with the given string. *)
+
+val failwith : 'a string -{'a | Failure:'a | }-> 'b
+(** Raise exception [Failure] with the given string. *)
+
+
+(** {2 Comparisons} *)
+
+
+external ( = ) : 'a -> 'a -> 'b bool 
+                 with content('a) < 'b 
+                 = "%equal"
+(** [e1 = e2] tests for structural equality of [e1] and [e2].
+   Mutable structures (e.g. references and arrays) are equal
+   if and only if their current contents are structurally equal,
+   even if the two mutable objects are not the same physical object.
+   Equality between cyclic data structures may not terminate. *)
+
+external ( <> ) : 'a -> 'a -> 'b bool 
+                  with content('a) < 'b
+                  = "%notequal"
+(** Negation of [Pervasives.=]. *)
+
+
+external ( < ) : 'a -> 'a -> 'b bool
+                 with content('a) < 'b
+                 = "%lessthan"
+(** See {!Pervasives.>=}. *)
+
+external ( > ) : 'a -> 'a -> 'b bool
+                 with content('a) < 'b
+                 = "%greaterthan"
+(** See {!Pervasives.>=}. *)
+
+external ( <= ) : 'a -> 'a -> 'b bool
+                  with content('a) < 'b
+                  = "%lessequal"
+(** See {!Pervasives.>=}. *)
+
+external ( >= ) : 'a -> 'a -> 'b bool
+                  with content('a) < 'b
+                  = "%greaterequal"
+(** Structural ordering functions. These functions coincide with
+   the usual orderings over integers, characters, strings
+   and floating-point numbers, and extend them to a
+   total ordering over all types.
+   The ordering is compatible with [(=)]. As in the case
+   of [(=)], mutable structures are compared by contents.
+   Comparison between cyclic structures may not terminate. *)
+
+external compare : 'a -> 'a -> 'b int
+                   with content('a) < 'b
+                   = "compare"
+(** [compare x y] returns [0] if [x=y], a negative integer if
+   [x<y], and a positive integer if [x>y]. The same restrictions
+   as for [=] apply. [compare] can be used as the comparison function
+   required by the {!Set} and {!Map} modules. *)
+
+val min : 'a -> 'a -> 'b
+          with 'a < 'b
+          and  content('a) < level('b)
+(** Return the smaller of the two arguments. *)
+
+val max : 'a -> 'a -> 'b
+          with 'a < 'b
+          and  content('a) < level('b)
+(** Return the greater of the two arguments. *)
+
+external ( == ) : 'a -> 'a -> 'b bool
+                  with content('a) < 'b
+                  = "%eq"
+(** [e1 == e2] tests for physical equality of [e1] and [e2].
+   On integers and characters, it is the same as structural
+   equality. On mutable structures, [e1 == e2] is true if and only if
+   physical modification of [e1] also affects [e2].
+   On non-mutable structures, the behavior of [(==)] is
+   implementation-dependent, except that [e1 == e2] implies
+   [e1 = e2]. *)
+
+external ( != ) : 'a -> 'a -> 'b bool
+                  with content('a) < 'b
+                  = "%noteq"
+(** Negation of {!Pervasives.==}. *)
+
+
+(** {2 Boolean operations} *)
+
+
+external not : 'a bool -> 'a bool = "%boolnot"
+(** The boolean negation. *)
+
+external ( && ) : 'a bool -> 'a bool -> 'a bool = "%sequand"
+(** The boolean ``and''. Evaluation is sequential, left-to-right:
+   in [e1 && e2], [e1] is evaluated first, and if it returns [false],
+   [e2] is not evaluated at all. *)
+
+external ( & ) : 'a bool -> 'a bool -> 'a bool = "%sequand"
+(** @deprecated {!Pervasives.&&} should be used instead. *)
+
+external ( || ) : 'a bool -> 'a bool -> 'a bool = "%sequor"
+(** See {!Pervasives.or}.*)
+
+external ( or ) : 'a bool -> 'a bool -> 'a bool = "%sequor"
+(** The boolean ``or''. Evaluation is sequential, left-to-right:
+   in [e1 || e2], [e1] is evaluated first, and if it returns [true],
+   [e2] is not evaluated at all. *)
+
+
+(** {2 Integer arithmetic} *)
+
+(** Integers are 31 bits wide (or 63 bits on 64-bit processors).
+   All operations are taken modulo 2{^31} (or 2{^63}).
+   They do not fail on overflow. *)
+
+external ( ~- ) : 'a int -> 'a int = "%negint"
+(** Unary negation. You can also write [-e] instead of [~-e]. *)
+
+external succ : 'a int -> 'a int = "%succint"
+(** [succ x] is [x+1]. *)
+
+external pred : 'a int -> 'a int = "%predint"
+(** [pred x] is [x-1]. *)
+
+external ( + ) : 'a int -> 'a int -> 'a int = "%addint"
+(** Integer addition. *)
+
+external ( - ) : 'a int -> 'a int -> 'a int = "%subint"
+(** Integer subtraction. *)
+
+external ( * ) : 'a int -> 'a int -> 'a int = "%mulint"
+(** Integer multiplication. *)
+
+external ( / ) : 'a int -> 'b int -{'c | Division_by_zero: 'c |}-> 'a int
+                 with 'b < 'a and 'b < 'c
+                 = "%divint"
+(** Integer division.
+   Raise [Division_by_zero] if the second argument is 0.
+   Integer division rounds the real quotient of its arguments towards zero.
+   More precisely, if [x >= 0] and [y > 0], [x / y] is the greatest integer
+   less than or equal to the real quotient of [x] by [y].  Moreover,
+   [(-x) / y = x / (-y) = -(x / y)].  *)
+
+external ( mod ) : 'a int -> 'b int -{'c | Division_by_zero: 'c |}-> 'a int
+                   with 'b < 'a and 'b < 'c
+                   = "%modint"
+(** Integer remainder.  If [y] is not zero, the result
+   of [x mod y] satisfies the following properties:
+   [x = (x / y) * y + x mod y] and
+   [abs(x mod y) < abs(y)].
+   If [y = 0], [x mod y] raises [Division_by_zero].
+   Notice that [x mod y] is negative if [x < 0]. *)
+
+val abs : 'a int -> 'a int
+(** Return the absolute value of the argument. *)
+
+val max_int : 'a int
+(** The greatest representable integer. *)
+
+val min_int : 'a int
+(** The smallest representable integer. *)
+
+
+
+(** {3 Bitwise operations} *)
+
+
+external ( land ) : 'a int -> 'a int -> 'a int = "%andint"
+(** Bitwise logical and. *)
+
+external ( lor ) : 'a int -> 'a int -> 'a int = "%orint"
+(** Bitwise logical or. *)
+
+external ( lxor ) : 'a int -> 'a int -> 'a int = "%xorint"
+(** Bitwise logical exclusive or. *)
+
+val lnot : 'a int -> 'a int
+(** Bitwise logical negation. *)
+
+external ( lsl ) : 'a int -> 'a int -> 'a int = "%lslint"
+(** [n lsl m] shifts [n] to the left by [m] bits.
+   The result is unspecified if [m < 0] or [m >= bitsize],
+   where [bitsize] is [32] on a 32-bit platform and
+   [64] on a 64-bit platform. *)
+
+external ( lsr ) : 'a int -> 'a int -> 'a int = "%lsrint"
+(** [n lsr m] shifts [n] to the right by [m] bits.
+   This is a logical shift: zeroes are inserted regardless of
+   the sign of [n].
+   The result is unspecified if [m < 0] or [m >= bitsize]. *)
+
+external ( asr ) : 'a int -> 'a int -> 'a int = "%asrint"
+(** [n asr m] shifts [n] to the right by [m] bits.
+   This is an arithmetic shift: the sign bit of [n] is replicated.
+   The result is unspecified if [m < 0] or [m >= bitsize]. *)
+    
+
+(** {2 Floating-point arithmetic}
+
+   Caml's floating-point numbers follow the
+   IEEE 754 standard, using double precision (64 bits) numbers.
+   Floating-point operations never raise an exception on overflow,
+   underflow, division by zero, etc.  Instead, special IEEE numbers
+   are returned as appropriate, such as [infinity] for [1.0 /. 0.0],
+   [neg_infinity] for [-1.0 /. 0.0], and [nan] (``not a number'')
+   for [0.0 /. 0.0].  These special numbers then propagate through
+   floating-point computations as expected: for instance,
+   [1.0 /. infinity] is [0.0], and any operation with [nan] as 
+   argument returns [nan] as result. 
+*)
+
+external ( ~-. ) : 'a float -> 'a float = "%negfloat"
+(** Unary negation. You can also write [-.e] instead of [~-.e]. *)
+
+external ( +. ) : 'a float -> 'a float -> 'a float = "%addfloat"
+(** Floating-point addition *)
+
+external ( -. ) : 'a float -> 'a float -> 'a float = "%subfloat"
+(** Floating-point subtraction *)
+
+external ( *. ) : 'a float -> 'a float -> 'a float = "%mulfloat"
+(** Floating-point multiplication *)
+
+external ( /. ) : 'a float -> 'a float -> 'a float = "%divfloat"
+(** Floating-point division. *)
+
+external ( ** ) : 'a float -> 'a float -> 'a float = "power_float" "pow" "float"
+(** Exponentiation *)
+
+external sqrt : 'a float -> 'a float = "sqrt_float" "sqrt" "float"
+(** Square root *)
+
+external exp : 'a float -> 'a float = "exp_float" "exp" "float"
+(** Exponential. *)
+
+external log : 'a float -> 'a float = "log_float" "log" "float"
+(** Natural logarithm. *)
+
+external log10 : 'a float -> 'a float = "log10_float" "log10" "float"
+(** Base 10 logarithm. *)
+
+external cos : 'a float -> 'a float = "cos_float" "cos" "float"
+(** See {!Pervasives.atan2}. *)
+
+external sin : 'a float -> 'a float = "sin_float" "sin" "float"
+(** See {!Pervasives.atan2}. *)
+
+external tan : 'a float -> 'a float = "tan_float" "tan" "float"
+(** See {!Pervasives.atan2}. *)
+
+external acos : 'a float -> 'a float = "acos_float" "acos" "float"
+(** See {!Pervasives.atan2}. *)
+
+external asin : 'a float -> 'a float = "asin_float" "asin" "float"
+(** See {!Pervasives.atan2}. *)
+
+external atan : 'a float -> 'a float = "atan_float" "atan" "float"
+(** See {!Pervasives.atan2}. *)
+
+external atan2 : 'a float -> 'a float -> 'a float = "atan2_float" "atan2" "float"
+(** The usual trigonometric functions. *)
+
+external cosh : 'a float -> 'a float = "cosh_float" "cosh" "float"
+(** See {!Pervasives.tanh}. *)
+
+external sinh : 'a float -> 'a float = "sinh_float" "sinh" "float"
+(** See {!Pervasives.tanh}. *)
+
+external tanh : 'a float -> 'a float = "tanh_float" "tanh" "float"
+(** The usual hyperbolic trigonometric functions. *)
+
+external ceil : 'a float -> 'a float = "ceil_float" "ceil" "float"
+(** See {!Pervasives.floor}. *)
+
+external floor : 'a float -> 'a float = "floor_float" "floor" "float"
+(** Round the given float to an integer value.
+   [floor f] returns the greatest integer value less than or
+   equal to [f].
+   [ceil f] returns the least integer value greater than or
+   equal to [f]. *)
+
+external abs_float : 'a float -> 'a float = "%absfloat"
+(** Return the absolute value of the argument. *)
+
+external mod_float : 'a float -> 'a float -> 'a float
+                     = "fmod_float" "fmod" "float"
+(** [mod_float a b] returns the remainder of [a] with respect to
+   [b].  The returned value is [a -. n *. b], where [n]
+   is the quotient [a /. b] rounded towards zero to an integer. *)
+
+external frexp : 'a float -> 'a float * 'a int = "frexp_float"
+(** [frexp f] returns the pair of the significant
+   and the exponent of [f].  When [f] is zero, the
+   significant [x] and the exponent [n] of [f] are equal to
+   zero.  When [f] is non-zero, they are defined by
+   [f = x *. 2 ** n] and [0.5 <= x < 1.0]. *)
+
+external ldexp : 'a float -> 'a int -> 'a float = "ldexp_float"
+(** [ldexp x n] returns [x *. 2 ** n]. *)
+
+external modf : 'a float -> 'a float * 'a float = "modf_float"
+(** [modf f] returns the pair of the fractional and integral
+   part of [f]. *)
+
+external float : 'a int -> 'a float = "%floatofint"
+(** Same as {!Pervasives.float_of_int}. *)
+
+external float_of_int : 'a int -> 'a float = "%floatofint"
+(** Convert an integer to floating-point. *)
+
+external truncate : 'a float -> 'a int = "%intoffloat"
+(** Same as {!Pervasives.int_of_float}. *)
+
+external int_of_float : 'a float -> 'a int = "%intoffloat"
+(** Truncate the given floating-point number to an integer.
+   The result is unspecified if it falls outside the
+   range of representable integers. *)
+
+val infinity : 'a float
+(** Positive infinity. *)
+
+val neg_infinity : 'a float
+(** Negative infinity. *)
+
+val nan : 'a float
+(** A special floating-point value denoting the result of an
+   undefined operation such as [0.0 /. 0.0].  Stands for
+   ``not a number''. *)
+
+val max_float : 'a float
+(** The largest positive finite value of type [float]. *)
+
+val min_float : 'a float
+(** The smallest positive, non-zero, non-denormalized value of type [float]. *)
+
+val epsilon_float : 'a float
+(** The smallest positive float [x] such that [1.0 +. x <> 1.0]. *)
+
+type 'a fpclass =
+    FP_normal           (* Normal number, none of the below *)
+  | FP_subnormal        (* Number very close to 0.0, has reduced precision *)
+  | FP_zero             (* Number is 0.0 or -0.0 *)
+  | FP_infinite         (* Number is positive or negative infinity *)
+  | FP_nan              (* Not a number: result of an undefined operation *)
+  # 'a
+(** The five classes of floating-point numbers, as determined by
+   the {!Pervasives.classify_float} function. *)
+
+external classify_float : 'a float -> 'a fpclass = "classify_float"
+(** Return the class of the given floating-point number:
+   normal, subnormal, zero, infinite, or not a number. *)
+
+
+(** {2 String operations}
+
+   More string operations are provided in the modules {!String} 
+   (immutable strings) and {!Charray} (mutable strings).
+*)
+
+val ( ^ ) : 'a string -> 'a string -> 'a string
+(** String concatenation. *)
+
+val ( $$ ) : 'a string -> 'a int -> 'a char
+(** Character access. *)
+
+val ( ^^ ) : ('a, 'b) charray -> ('a, 'b) charray -> ('a, 'b) charray
+(** Charray concatenation. *)
+
+val string_of_charray : ('a, 'b) charray -> 'b string
+                    with 'a < 'b
+(** Coerces a mutable string into an immutable one. *)
+
+val charray_of_string : 'a string -> ('a, 'a) charray
+(** Creates a mutable string from an immutable one. *)
+
+(** {2 Character operations}
+
+   More character operations are provided in module {!Char}.
+*)
+
+external int_of_char : 'a char -> 'a int = "%identity"
+(** Return the ASCII code of the argument. *)
+
+val char_of_int : 'a int -{'b | Invalid_argument: 'b |}-> 'a char
+                  with 'a < 'b
+(** Return the character with the given ASCII code.
+   Raise [Invalid_argument "char_of_int"] if the argument is
+   outside the range 0--255. *)
+
+
+(** {2 Unit operations} *)
+
+external ignore : 'a -> unit = "%ignore"
+(** Discard the value of its argument and return [()].
+   For instance, [ignore(f x)] discards the result of
+   the side-effecting function [f].  It is equivalent to
+   [f x; ()], except that the latter may generate a
+   compiler warning; writing [ignore(f x)] instead
+   avoids the warning. *)
+
+
+(** {2 String conversion functions} *)
+
+val string_of_bool : 'a bool -> 'a string
+(** Return the string representation of a boolean. *)
+
+val bool_of_string : 'a string -{'c | Invalid_argument: 'c |}-> 'b bool
+                  with 'a < 'b and 'b < 'c
+(** Convert the given string to a boolean.
+   Raise [Invalid_argument "bool_of_string"] if the string is not
+   ["true"] or ["false"]. *)
+
+val string_of_int : 'a int -> 'a string
+(** Return the string representation of an integer, in decimal. *)
+
+external int_of_string : 'a string -{'b | Failure: 'b |}-> 'a int
+                      with 'a < 'b
+                      = "int_of_string"
+(** Convert the given string to an integer.
+   The string is read in decimal (by default) or in hexadecimal,
+   octal or binary if the string begins with [0x], [0o] or [0b]
+   respectively.
+   Raise [Failure "int_of_string"] if the given string is not
+   a valid representation of an integer. *)
+
+val string_of_float : 'a float -> 'a string
+(** Return the string representation of a floating-point number. *)
+
+external float_of_string : 'a string -{'b | Failure: 'b |}-> 'a float
+                        with 'a < 'b
+                        = "float_of_string"
+(** Convert the given string to a float.  Raise [Failure "float_of_string"]
+   if the given string is not a valid representation of a float. *)
+
+
+
+(** {2 Pair operations} *)
+
+external fst : 'a * 'b -> 'a = "%field0"
+(** Return the first component of a pair. *)
+
+external snd : 'a * 'b -> 'b = "%field1"
+(** Return the second component of a pair. *)
+
+
+(** {2 List operations}
+
+   More list operations are provided in module {!List}. 
+*)
+
+val ( @ ) : ('a, 'b) list -> ('a, 'b) list -> ('a, 'b) list
+(** List concatenation. *)
+
+
+(** {2 Input/output} *)
+
+(** {3 Output functions on standard output} *)
+
+val print_char : !stdout char -{!stdout ||}-> unit
+(** Print a character on standard output. *)
+
+val print_string : !stdout string -{!stdout ||}-> unit
+(** Print a string on standard output. *)
+
+val print_int : !stdout int -{!stdout ||}-> unit
+(** Print an integer, in decimal, on standard output. *)
+
+val print_float : !stdout float -{!stdout ||}-> unit
+(** Print a floating-point number, in decimal, on standard output. *)
+
+val print_endline : !stdout string -{!stdout ||}-> unit
+(** Print a string, followed by a newline character, on
+   standard output. *)
+
+val print_newline : unit -{!stdout ||}-> unit
+(** Print a newline character on standard output, and flush
+   standard output. This can be used to simulate line
+   buffering of standard output. *)
+
+
+(** {3 Output functions on standard error} *)
+
+val prerr_char : !stderr char -{!stderr ||}-> unit
+(** Print a character on standard error. *)
+
+val prerr_string : !stderr string -{!stderr ||}-> unit
+(** Print a string on standard error. *)
+
+val prerr_int : !stderr int -{!stderr ||}-> unit
+(** Print an integer, in decimal, on standard error. *)
+
+val prerr_float : !stderr float -{!stderr ||}-> unit
+(** Print a floating-point number, in decimal, on standard error. *)
+
+val prerr_endline : !stderr string -{!stderr ||}-> unit
+(** Print a string, followed by a newline character on standard error
+   and flush standard error. *)
+
+val prerr_newline : unit -{!stderr ||}-> unit
+(** Print a newline character on standard error, and flush
+   standard error. *)
+
+
+(** {3 Input functions on standard input} *)
+
+val read_line : unit -{ [< !stdout, !stdin] | 
+                        End_of_file: !stdin |}-> !stdin string
+(** Flush standard output, then read characters from standard input
+   until a newline character is encountered. Return the string of
+   all characters read, without the newline character at the end. *)
+
+val read_int : unit -{ [< !stdout, !stdin] | 
+                       Failure: !stdin; End_of_file: !stdin |}-> !stdin int
+(** Flush standard output, then read one line from standard input
+   and convert it to an integer. Raise [Failure "int_of_string"]
+   if the line read is not a valid representation of an integer. *)
+
+val read_float : unit -{ [< !stdout, !stdin] |
+                         End_of_file: !stdin |}-> !stdin float
+(** Flush standard output, then read one line from standard input
+   and convert it to a floating-point number.
+   The result is unspecified if the line read is not a valid
+   representation of a floating-point number. *)
+
+
+(** {2 References} *)
+
+
+type ('a, 'b) ref = { mutable contents : 'a } # 'b
+(** The type of references (mutable indirection cells) containing
+   a value of type ['a]. *)
+
+external ref : 'a -> ('a, 'b) ref = "%makemutable"
+(** Return a fresh reference containing the given value. *)
+
+external ( ! ) : ('a, 'b) ref -> 'c
+                 with 'a < 'c and 'b < level('c)
+                 = "%field0"
+(** [!r] returns the current contents of reference [r].
+   Equivalent to [fun r -> r.contents]. *)
+
+external ( := ) : ('a, 'b) ref -> 'a -{'c ||}-> unit
+                  with 'b < level('a) and 'c < level('a)
+                  = "%setfield0"
+(** [r := a] stores the value of [a] in reference [r].
+   Equivalent to [fun r v -> r.contents <- v]. *)
+
+external incr : ('a int, 'b) ref -{'b ||}-> unit
+                with 'b < 'a
+                = "%incr"
+(** Increment the integer contained in the given reference.
+   Equivalent to [fun r -> r := succ !r]. *)
+
+external decr : ('a int, 'b) ref -{'b ||}-> unit
+                with 'b < 'a
+                = "%decr"
+(** Decrement the integer contained in the given reference.
+   Equivalent to [fun r -> r := pred !r]. *)
+
+
+(** {2 Program termination} *)
+
+val exit : !exit_code int -{'a | exit: 'a|}-> 'b
+           with 'a < !exit_code
+(** Flush all pending writes on {!Pervasives.stdout} and
+   {!Pervasives.stderr},
+   and terminate the process, returning the given status code
+   to the operating system (usually 0 to indicate no errors,
+   and a small positive integer to indicate failure.) 
+   An implicit [exit 0] is performed each time a program
+   terminates normally (but not if it terminates because of
+   an uncaught exception). *)

@@ -1,0 +1,22 @@
+			 Flow Caml emacs mode
+
+The flowcaml.el file defines a flowcaml-mode for emacs, for editing
+Flow Caml programs, as well as running a toplevel.  This mode is a
+slight adaptation of the caml-mode, which must be already installed on
+your system.
+
+To use it, just put the file in your path, and add the following
+three lines in your .emacs.
+
+    (setq auto-mode-alist
+          (cons '("\\.fml[i]?$" . flowcaml-mode) auto-mode-alist))
+    (autoload 'flowcaml-mode "flowcaml" "Major mode for Flow Caml" t)
+
+By default, the mode enables font-lock highlighting of source code.
+To disable it, add in your .emacs
+
+    (setq flowcaml-font-lock nil)
+
+To install the mode itself, edit the Makefile and do
+
+    % make install

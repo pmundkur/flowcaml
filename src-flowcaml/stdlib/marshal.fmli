@@ -1,0 +1,57 @@
+(**************************************************************************)
+(*                                                                        *)
+(*                               Flow Caml                                *)
+(*                                                                        *)
+(*          Vincent Simonet, Projet Cristal, INRIA Rocquencourt           *)
+(*                                                                        *)
+(*  Copyright 2002, 2003 Institut National de Recherche en Informatique   *)
+(*  et en Automatique.  All rights reserved.  This file is distributed    *)
+(*  under the terms of the GNU Library General Public License, with the   *)
+(*  special exception on linking described in file ../LICENSE.            *)
+(*                                                                        *)
+(*  Author contact: Vincent.Simonet@inria.fr                              *)
+(*  Software page: http://cristal.inria.fr/~simonet/soft/flowcaml/        *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* $Id: marshal.fmli,v 1.2 2003/06/26 13:32:52 simonet Exp $ *)
+
+(** Marshaling of data structures.
+
+   This module provides functions to encode arbitrary data structures
+   as sequences of bytes, which can then be written on a file or
+   sent over a pipe or network connection.  The bytes can then
+   be read back later, possibly in another process, and decoded back
+   into a data structure. The format for the byte sequences
+   is compatible across all machines for a given version of Objective Caml.
+
+   Warning: marshaling is currently not type-safe. The type
+   of marshaled data is not transmitted along the value of the data,
+   making it impossible to check that the data read back possesses the
+   type expected by the context. In particular, the result type of
+   the [Marshal.from_*] functions is given as ['a], but this is
+   misleading: the returned Caml value does not possess type ['a]
+   for all ['a]; it has one, unique type which cannot be determined
+   at compile-type.  The programmer should explicitly give the expected
+   type of the returned value.  Anything can happen at run-time if the
+   object in the file does not belong to the given type.
+
+*)
+
+type extern_flags =
+    No_sharing                          (** Don't preserve sharing *)
+(** The flags to the [Marshal.to_*] functions below. *)
+
+external to_string : 'a -> (extern_flags, 'b) list -> 'b string
+                     with content('a) < 'b 
+                   = "output_value_to_string"
+(** [Marshal.to_string v flags] returns a string containing
+   the representation of [v] as a sequence of bytes.
+   The [flags] argument has the same meaning as for
+   {!Marshal.to_channel}. *)
+
+val from_string : string -> int -> 'a
+(** [Marshal.from_string buff ofs] unmarshals a structured value
+   like {!Marshal.from_channel} does, except that the byte
+   representation is not read from a channel, but taken from
+   the string [buff], starting at position [ofs]. *)

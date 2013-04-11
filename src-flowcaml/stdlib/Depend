@@ -1,0 +1,11 @@
+array.ml: array.mli 
+buffer.ml: charray.mli string.mli sys.mli buffer.mli 
+char.ml: char.mli 
+complex.ml: complex.mli 
+hashtbl.ml: array.mli sys.mli hashtbl.mli 
+list.ml: list.mli 
+map.ml: map.mli 
+queue.ml: queue.mli 
+random.ml: array.mli char.mli digest.mli random.mli 
+set.ml: set.mli 
+stack.ml: list.mli stack.mli 
